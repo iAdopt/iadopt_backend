@@ -1,0 +1,10 @@
+{
+    "db": {
+        "user": "admin",
+        "password": "iadopt_db",
+        "host": "localhost",
+        "database": "iadopt",
+        "port": 5432,
+        "migrations-dir": "./src/db/migrations"
+    } 
+}
