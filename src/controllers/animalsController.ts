@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import db from '../db';
 
-export function all(req: Request, res: Response, next: (error: Error) => void): void {
+type NextCallback = (error: Error) => void;
+
+export function all(req: Request, res: Response, next: NextCallback): void {
   db.query('SELECT * FROM animals', [], (error, result) => {
     if (error) {
       return next(error);
