@@ -10,10 +10,14 @@ export const all = catchErrors(async (req: Request, res: Response): Promise<void
 
 export const byId = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const { id } = req.query;
-  if (!id) {
+
+  if (typeof id !== 'string') {
     throw new ApiError(400, 'Missing requiered Id.');
   }
-  // console.log(uuidValidate(id));
+
+  if (!uuidValidate(id)) {
+    throw new ApiError(400, 'Specified Id is not a valid uuid');
+  }
 
   const animals = await getAnimalById(id);
   res.send(animals.rows[0]);

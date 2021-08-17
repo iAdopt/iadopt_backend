@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import config from 'config';
 import apiRouter from './routes/index';
 import { errorHandleMiddleware } from './middlewares/errorHandler';
-import schema from './graphql/schema';
+import schema from './graphql';
 
 const app = express();
 app.use(
