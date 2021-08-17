@@ -1,22 +1,24 @@
+import { validate as uuidValidate } from 'uuid';
 import { Request, Response } from 'express';
-import db from '../db';
+import { ApiError, catchErrors } from '../middlewares/errorHandler';
+import { getAllAnimals, getAnimalById } from '../services/animals.services';
 
-type NextCallback = (error: Error) => void;
+export const all = catchErrors(async (req: Request, res: Response): Promise<void> => {
+  const animals = await getAllAnimals();
+  res.send(animals.rows);
+});
 
-export function all(req: Request, res: Response, next: NextCallback): void {
-  db.query('SELECT * FROM animals', [], (error, result) => {
-    if (error) {
-      return next(error);
-    }
-    res.send(result.rows);
-    return null;
-  });
-}
+export const byId = catchErrors(async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.query;
+  if (!id) {
+    throw new ApiError(400, 'Missing requiered Id.');
+  }
+  // console.log(uuidValidate(id));
 
-export function byId(req: Request, res: Response): void {
-  res.send('NOT IMPLEMENTED: Author list');
-}
+  const animals = await getAnimalById(id);
+  res.send(animals.rows[0]);
+});
 
 export function bySpecie(req: Request, res: Response): void {
-  res.send('NOT IMPLEMENTED: Author list');
+  res.send('NOT IMPLEMENTED');
 }

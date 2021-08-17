@@ -6,5 +6,27 @@
         "database": "iadopt",
         "port": 5432,
         "migrations-dir": "./src/db/migrations"
-    } 
+    },
+    "helmetConfig": {
+        "contentSecurityPolicy": {
+          "directives": {
+            "defaultSrc": [
+              "'self'",
+              "'unsafe-inline'"
+            ],
+            "baseUri": ["'self'"],
+            "blockAllMixedContent": [],
+            "fontSrc": ["'self'", "'https:'", "'data:'"],
+            "frameAncestors": ["'self'"],
+            "imgSrc": ["'self'", "'data:'"],
+            "objectSrc": ["'none'"],
+            "scriptSrc": [
+              "'self'",
+              "'unsafe-inline'",
+              "'unsafe-eval'"
+            ],
+            "upgradeInsecureRequests": []
+          }
+        }
+      }
 }
