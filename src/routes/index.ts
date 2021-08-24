@@ -1,8 +1,8 @@
-import express from 'express';
-import animalsRouter from './animals.routes';
+import express from 'express'
+import animalsRouter from './animals.routes'
 
-const apiRouter = express.Router();
+const apiRouter = express.Router()
 
-apiRouter.use('/animals', animalsRouter);
+apiRouter.use('/animals', animalsRouter)
 
-export default apiRouter;
+export default apiRouter

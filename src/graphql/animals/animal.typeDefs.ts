@@ -1,15 +1,15 @@
-import gql from 'graphql-tag';
+import gql from 'graphql-tag'
 
 const typeDefs = gql`
-    type Query {
-        animals: [Animal]
-        animal(id: ID!): Animal
-    }
+  type Query {
+    animals: [Animal]
+    animal(id: ID!): Animal
+  }
 
-    type Animal {
-        id: ID!,
-        name: String,
-    }
-`;
+  type Animal {
+    id: ID!
+    name: String
+  }
+`
 
-export default typeDefs;
+export default typeDefs
