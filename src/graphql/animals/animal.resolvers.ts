@@ -1,5 +1,6 @@
 import fetch from 'node-fetch'
 
+
 const resolvers = {
   Query: {
     animals: async (): Promise<JSON> => {
