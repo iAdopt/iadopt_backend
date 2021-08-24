@@ -4,11 +4,18 @@ const typeDefs = gql`
   type Query {
     animals: [Animal]
     animal(id: ID!): Animal
+    specie(specie: Specie_enum): [Animal]
   }
 
   type Animal {
     id: ID!
-    name: String
+    name: String,
+    specie: Specie_enum,
+  }
+
+  enum Specie_enum{
+        CAT
+        DOG
   }
 `;
 
