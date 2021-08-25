@@ -40,11 +40,11 @@ export const bySpecie = catchErrors(async (req: Request, res: Response): Promise
   res.send(animalsBySpecie.rows);
 });
 
-export const byGender = catchErrors(async (req: Request, res: Response): Promise<void> => {
+/*export const byGender = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const gender = req.params.gender;
-  const animalsByGender = await getAnimalsByGender(gender);
+  //const animalsByGender = await getAnimalsByGender(gender);
   res.send(animalsByGender.rows);
-});
+});*/
 
 export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const { specie, age, gender, state, location } = req.query;
