@@ -1,7 +1,7 @@
 import { validate as uuidValidate } from 'uuid';
 import { Request, Response } from 'express';
 import { ApiError, catchErrors } from '../middlewares/errorHandler';
-import { getAllAnimals, getAnimalById, getAnimalsBySpecie, getAnimalsByGender, getAnimalsByFilter } from '../services/animals.services';
+import { getAllAnimals, getAnimalById, getAnimalsBySpecie, getAnimalsByFilter } from '../services/animals.services';
 
 export const all = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const animals = await getAllAnimals();
