@@ -10,6 +10,6 @@ exports.up = (pgm) => {
     birthdate:{type:'Date'},
     gender:{type:'gender_enum'},
     state:{type:'state_enum'},
-    location:{type:'String'},
+    location:{type:'int'},
   });  
 };

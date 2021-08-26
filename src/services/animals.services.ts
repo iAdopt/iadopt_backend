@@ -26,6 +26,7 @@ export const getAnimalById = async (id: any): Promise<QueryResult<any>> => {
   }
 };
 
+
 /*Not implemented*/
 /*export const getAnimalsBySpecie = async (specie: any): Promise<QueryResult<any>> => {
   const rows = await query('SELECT * FROM animals WHERE specie=$1', [specie]);
@@ -62,10 +63,10 @@ export const getAnimalsByFilter = async (specie: any, age: any, gender: any, sta
       }
       if (age !== 'allAge') {
         if (age === 'PUPPY') {
-          queryAge = `AND (DATE_PART('year',CURRENT_DATE)-DATE_PART('year',birthdate))*12+(DATE_PART('month',CURRENT_DATE)-DATE_PART('month',birthdate))<12;`
+          queryAge = `AND (DATE_PART('year',CURRENT_DATE)-DATE_PART('year',birthdate))*12+(DATE_PART('month',CURRENT_DATE)-DATE_PART('month',birthdate))<12`;
         }
         else {
-          queryAge = `AND (DATE_PART('year',CURRENT_DATE)-DATE_PART('year',birthdate))*12+(DATE_PART('month',CURRENT_DATE)-DATE_PART('month',birthdate))>=12;`
+          queryAge = `AND (DATE_PART('year',CURRENT_DATE)-DATE_PART('year',birthdate))*12+(DATE_PART('month',CURRENT_DATE)-DATE_PART('month',birthdate))>=12`;
         }
       }
       if (state !== 'allStatus') {
@@ -75,9 +76,10 @@ export const getAnimalsByFilter = async (specie: any, age: any, gender: any, sta
       }
       if (location !== 'allLocation') {
         i++;
-        parameters.push(location);
+        parameters.push(parseInt(location));
         queryLocation = `AND location=$${i}`;
       }
+
       rows = await query(`SELECT * FROM animals WHERE specie=$1 ${queryGender} ${queryState} ${queryAge} ${queryLocation}`, [...parameters]);
     }
     return rows;

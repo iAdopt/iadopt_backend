@@ -77,10 +77,10 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
   if (!location) {
     throw new ApiError(400, `Missing required 'location'`);
   }
-  console.log(location.length);
-  //if(location!=='allLocation' && location.length!==6) /*|| !regex.test(location.toString())*/{
-  //throw new ApiError(400, `Incorrect 'location' ${location}`);
-  //}  
+  if(location!=='allLocation' && !Number(location)){
+    throw new ApiError(400, `Incorrect 'location' ${location}`);
+  }
+
 
   const animalsByFilter = await getAnimalsByFilter(specie, age, gender, state, location);
   res.send(animalsByFilter.rows);

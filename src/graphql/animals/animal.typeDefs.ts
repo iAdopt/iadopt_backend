@@ -8,7 +8,7 @@ scalar Date
         animal(id: ID!): Animal
         specie(specie:Specie_enum):[Animal]
         gender(gender:Gender_enum):[Animal]
-        animalsFilter(specie:Specie_enum!,gender:Gender_enum!,state:State_enum!,location:String!):[Animal]
+        animalsFilter(specie:Specie_enum!,gender:Gender_enum!,state:State_enum!,location:Int!):[Animal]
     }
 
     type Animal {
@@ -18,7 +18,7 @@ scalar Date
         birthdate: Date!,
         gender:Gender_enum!,
         state:State_enum!,
-        location:String!
+        location:Int!
     }
     
     enum Specie_enum{
