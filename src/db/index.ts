@@ -1,6 +1,7 @@
 import { Pool, QueryResult } from 'pg';
-import config from 'config';
 
-const pool = new Pool(config.get('db'));
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+});
 
 export default (text: string, params: any[]): Promise<QueryResult<any>> => pool.query(text, params);
