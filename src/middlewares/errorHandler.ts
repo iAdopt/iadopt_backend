@@ -2,9 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 
 class ApiError extends Error {
   statusCode: number;
-
   name: string;
-
   message: string;
 
   constructor (status: number, message: string) {

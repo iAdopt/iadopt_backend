@@ -1,5 +1,4 @@
 import { QueryResult } from 'pg';
-import { ApiError } from '../middlewares/errorHandler';
 import { dbErrorWrapper } from './dbErrorWrapper';
 import query from '../db';
 
@@ -9,12 +8,8 @@ export const getAllAnimals = dbErrorWrapper(async (): Promise<QueryResult<any>> 
 });
 
 export const getAnimalById = dbErrorWrapper(async (id: any): Promise<QueryResult<any>> => {
-  try {
-    const rows = await query('SELECT * FROM animals WHERE id= $1::uuid', [id]);
-    return rows;
-  } catch (err) {
-    throw new ApiError(500, err);
-  }
+  const rows = await query('SELECT * FROM animals WHERE id= $1::uuid', [id]);
+  return rows;
 });
 
 export const getAnimalsBySpecie = dbErrorWrapper(async (specie: any): Promise<QueryResult<any>> => {
