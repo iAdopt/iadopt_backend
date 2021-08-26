@@ -11,7 +11,7 @@ services:
         ports:
             - 5432:5432
         volumes:
-            - ./sql:/sql
+            - postgres_data:/../../var/lib/postgresql
     
     backend:
         build:
@@ -30,3 +30,6 @@ services:
         volumes:
           - ./:/opt/app
         entrypoint: "./entrypoint.sh"
+
+volumes:
+  postgres_data:
