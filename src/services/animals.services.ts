@@ -49,42 +49,44 @@ export const getAnimalsByFilter = async (specie: any, age: any, gender: any, sta
   let queryAge = '';
   let queryLocation = '';
   let i = 1;
+  let paramQueryAge = '';
 
   parameters.push(specie);
 
   try {
-    if (gender === 'allGender' && state === 'allStatus' && age === 'allAge' && location == 'allLocation') {
+    /*if (gender === 'allGender' && status === 'allStatus' && age === 'allAge' && location == 'allLocation') {
       rows = await query('SELECT * FROM animals WHERE specie=$1', [specie]);
-    } else {
-      if (gender !== 'allGender') {
-        i++;
-        parameters.push(gender);
-        queryGender = `AND gender=$${i}`;
-      }
-      if (age !== 'allAge') {
-        if (age === 'PUPPY') {
-          queryAge = `AND (DATE_PART('year',CURRENT_DATE)-DATE_PART('year',birthdate))*12+(DATE_PART('month',CURRENT_DATE)-DATE_PART('month',birthdate))<12`;
-        }
-        else {
-          queryAge = `AND (DATE_PART('year',CURRENT_DATE)-DATE_PART('year',birthdate))*12+(DATE_PART('month',CURRENT_DATE)-DATE_PART('month',birthdate))>=12`;
-        }
-      }
-      if (state !== 'allStatus') {
-        i++;
-        parameters.push(state);
-        queryState = `AND state=$${i}`;
-      }
-      if (location !== 'allLocation') {
-        i++;
-        parameters.push(parseInt(location));
-        queryLocation = `AND location=$${i}`;
-      }
-
-      rows = await query(`SELECT * FROM animals WHERE specie=$1 ${queryGender} ${queryState} ${queryAge} ${queryLocation}`, [...parameters]);
+    } else {*/
+    if (gender !== 'allGender') {
+      i++;
+      parameters.push(gender);
+      queryGender = `AND gender=$${i}`;
     }
+    if (age !== 'allAge') {
+      if (age === 'PUPPY') {
+        paramQueryAge = '<12';
+      }
+      else {
+        paramQueryAge = '>=12';
+      }
+      //queryAge = `AND (DATE_PART('year',CURRENT_DATE)-DATE_PART('year',birthdate))*12+(DATE_PART('month',CURRENT_DATE)-DATE_PART('month',birthdate))>=12`;
+    }
+    if (state !== 'allStatus') {
+      i++;
+      parameters.push(state);
+      queryState = `AND status=$${i}`;
+    }
+    if (location !== 'allLocation') {
+      i++;
+      parameters.push(parseInt(location));
+      queryLocation = `AND location=$${i}`;
+    }
+
+    queryAge = `AND (DATE_PART('year',CURRENT_DATE)-DATE_PART('year',birthdate))*12+(DATE_PART('month',CURRENT_DATE)-DATE_PART('month',birthdate))${paramQueryAge}`;
+    rows = await query(`SELECT * FROM animals WHERE specie=$1 ${queryGender} ${queryState} ${queryAge} ${queryLocation}`, [...parameters]);
+    //}
     return rows;
   } catch (err) {
-    console.log(err);
     throw new ApiError(500, err);
   }
 };

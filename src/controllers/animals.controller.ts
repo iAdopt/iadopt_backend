@@ -48,8 +48,7 @@ export const bySpecie = catchErrors(async (req: Request, res: Response): Promise
 
 export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const { specie, age, gender, state, location } = req.query;
-  let regex = new RegExp(/^[0-9]*$/);
-
+  
   if (!specie) {
     throw new ApiError(400, `Missing required 'specie'`);
   }
@@ -80,7 +79,6 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
   if(location!=='allLocation' && !Number(location)){
     throw new ApiError(400, `Incorrect 'location' ${location}`);
   }
-
 
   const animalsByFilter = await getAnimalsByFilter(specie, age, gender, state, location);
   res.send(animalsByFilter.rows);

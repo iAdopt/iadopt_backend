@@ -9,7 +9,7 @@ exports.up = (pgm) => {
     specie:{type: 'specie_enum'},
     birthdate:{type:'Date'},
     gender:{type:'gender_enum'},
-    state:{type:'state_enum'},
+    status:{type:'state_enum'},
     location:{type:'int'},
   });  
 };
