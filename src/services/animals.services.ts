@@ -1,6 +1,6 @@
 import { QueryResult } from 'pg';
 import { ApiError } from '../middlewares/errorHandler';
-//import { dbErrorWrapper } from './dbErrorWrapper';
+import { dbErrorWrapper } from './dbErrorWrapper';
 import query from '../db';
 
 export const getAllAnimals = async (): Promise<QueryResult<any>> => {

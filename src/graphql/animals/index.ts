@@ -3,5 +3,5 @@ import resolvers from './animal.resolvers';
 
 export default {
   typeDefs,
-  resolvers,
+  resolvers
 };
