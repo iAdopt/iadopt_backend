@@ -2,9 +2,10 @@
   "name": "iadopt_backend",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "dev": "nodemon ./src/index.ts",
+    "start": "ts-node ./src/index.ts",
     "build": "tsc",
     "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "eslint": "eslint --fix 'src/**/*.ts'",
