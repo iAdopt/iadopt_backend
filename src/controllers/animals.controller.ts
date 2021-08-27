@@ -40,38 +40,32 @@ export const bySpecie = catchErrors(async (req: Request, res: Response): Promise
   res.send(animalsBySpecie.rows);
 });
 
-/*export const byGender = catchErrors(async (req: Request, res: Response): Promise<void> => {
-  const gender = req.params.gender;
-  //const animalsByGender = await getAnimalsByGender(gender);
-  res.send(animalsByGender.rows);
-});*/
-
 export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
-  const { specie, age, gender, state, location } = req.query;
+  const { species, age, gender, status, location } = req.query;
   
-  if (!specie) {
+  if (!species) {
     throw new ApiError(400, `Missing required 'specie'`);
   }
-  if (specie !== 'CAT' && specie !== 'DOG') {
-    throw new ApiError(400, `Incorrect specie ${specie}`);
+  if (species !== 'cat' && species !== 'dog') {
+    throw new ApiError(400, `Incorrect specie ${species}`);
   }
   if (!age) {
     throw new ApiError(400, `Missing required 'age'`);
   }
-  if (age !== 'ADULT' && age !== 'PUPPY' && age !== 'allAge') {
+  if (age !== 'adult' && age !== 'puppy' && age !== 'allAge') {
     throw new ApiError(400, `Incorrect 'age' ${age}`);
   }
   if (!gender) {
     throw new ApiError(400, `Missing required 'gender'`);
   }
-  if (gender !== 'FEMALE' && gender !== 'MALE' && gender !== 'allGender') {
+  if (gender !== 'female' && gender !== 'male' && gender !== 'allGender') {
     throw new ApiError(400, `Incorrect 'gender' ${gender}`);
   }
-  if (!state) {
+  if (!status) {
     throw new ApiError(400, `Missing required 'state'`);
   }
-  if (state !== 'URGENT' && state !== 'NEW' && state !== 'allStatus') {
-    throw new ApiError(400, `Incorrect 'state' ${state}`);
+  if (status !== 'urgent' && status !== 'new' && status !== 'allStatus') {
+    throw new ApiError(400, `Incorrect 'state' ${status}`);
   }
   if (!location) {
     throw new ApiError(400, `Missing required 'location'`);
@@ -80,6 +74,6 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
     throw new ApiError(400, `Incorrect 'location' ${location}`);
   }
 
-  const animalsByFilter = await getAnimalsByFilter(specie, age, gender, state, location);
+  const animalsByFilter = await getAnimalsByFilter(species, age, gender, status, location);
   res.send(animalsByFilter.rows);
 });
