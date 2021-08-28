@@ -1,7 +1,7 @@
 import { validate as uuidValidate } from 'uuid';
 import { Request, Response } from 'express';
 import { ApiError, catchErrors } from '../middlewares/errorHandler';
-import { getAllAnimals, getAnimalById, getAnimalsBySpecie } from '../services/animals.services';
+import { getAllAnimals, getAnimalById, getAnimalsByFilter, getAnimalsBySpecie } from '../services/animals.services';
 
 export const all = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const animals = await getAllAnimals();
@@ -10,8 +10,6 @@ export const all = catchErrors(async (req: Request, res: Response): Promise<void
 
 export const byId = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const id = req.params.Id;
-  console.log(id);
-
   if (typeof id !== 'string') {
     throw new ApiError(400, 'Missing requiered Id.');
   }
@@ -31,6 +29,33 @@ export const byId = catchErrors(async (req: Request, res: Response): Promise<voi
 
 export const bySpecie = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const specie = req.params.specie;
+  if (!specie) {
+    throw new ApiError(400, 'Missing required "specie"');
+  }
   const animalsBySpecie = await getAnimalsBySpecie(specie);
   res.send(animalsBySpecie.rows);
 });
+
+export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
+  let params: { [key: string]: string } = { };
+  Object.entries(req.query).forEach(([key, value]) => {
+    params = { ...params, ...checkFilterValues(key, value) };
+  });
+  // @ts-ignore
+  const filteredAnimals = await getAnimalsByFilter(...params);
+  res.send(filteredAnimals.rows);
+});
+
+const validValues: { [key: string]: string[] } = {
+  specie: ['cat', 'dog', undefined],
+  age: ['puppy', 'adult', undefined],
+  gender: ['female', 'male', undefined],
+  status: ['urgent', 'new', undefined]
+};
+
+const checkFilterValues = (key: string, value: any): any => {
+  if (!(value in validValues[key])) {
+    throw new ApiError(400, `Invalid ${key}.`);
+  }
+  return { key: value };
+};

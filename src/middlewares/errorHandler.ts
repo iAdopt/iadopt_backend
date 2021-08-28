@@ -2,8 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 
 class ApiError extends Error {
   statusCode: number;
-  name: string;
-  message: string;
 
   constructor (status: number, message: string) {
     super();
@@ -20,7 +18,7 @@ const errorHandleMiddleware = (error: ApiError, req: Request, res: Response, nex
   }
 };
 
-const catchErrors = (route: Function) => async (req: Request, res: Response, next: Function, ...args: any): Promise<void> => {
+const catchErrors = (route: Function) => async (req: Request, res: Response, next: NextFunction, ...args: any): Promise<void> => {
   try {
     await route(req, res, next, ...args);
   } catch (err) {

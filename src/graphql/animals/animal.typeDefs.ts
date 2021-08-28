@@ -18,5 +18,4 @@ const typeDefs = gql`
         DOG
   }
 `;
-
 export default typeDefs;
