@@ -57,5 +57,5 @@ const checkFilterValues = (key: string, value: any): any => {
   if (!(value in validValues[key])) {
     throw new ApiError(400, `Invalid ${key}.`);
   }
-  return { key: value };
+  return { key: value || null };
 };
