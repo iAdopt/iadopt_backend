@@ -4,8 +4,10 @@ import { ApiError, catchErrors } from '../middlewares/errorHandler';
 import { getAllAnimals, getAnimalById, getAnimalsBySpecie, getAnimalsByFilter } from '../services/animals.services';
 
 export const all = catchErrors(async (req: Request, res: Response): Promise<void> => {
+  debugger;
   const animals = await getAllAnimals();
 
+  //console.log(`animals.row ${animals.rows}`);
   res.send(animals.rows);
 });
 

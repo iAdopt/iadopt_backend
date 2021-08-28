@@ -14,11 +14,7 @@ const resolvers = {
       const response = await fetch('http://localhost:8080/api/animals/bySpecie/:species');
       return response.json();
     },
-    gender: async (): Promise<JSON> => {
-      const response = await fetch('http://localhost:8080/api/animals/byGener/:gender');
-      return response.json();
-    },
-    animalsFilter:async(): Promise<JSON>=>{
+    animalsFilter: async (): Promise<JSON> => {
       const response = await fetch('http://localhost:8080/api/animals/byFilter#animalsByFilter');
       return response.json();
     }
