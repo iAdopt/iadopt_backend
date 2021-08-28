@@ -7,9 +7,10 @@ export const all = catchErrors(async (req: Request, res: Response): Promise<void
   const animals = await getAllAnimals();
   res.send(animals.rows);
 });
-debugger;
+
 export const byId = catchErrors(async (req: Request, res: Response): Promise<void> => {
-  const id = req.params.animal;
+  const id = req.params.Id;
+  console.log(id);
 
   if (typeof id !== 'string') {
     throw new ApiError(400, 'Missing requiered Id.');
@@ -20,11 +21,16 @@ export const byId = catchErrors(async (req: Request, res: Response): Promise<voi
   }
 
   const animals = await getAnimalById(id);
+
+  if (!animals.rows.length) {
+    throw new ApiError(400, 'No animal corresponds to the given uuid');
+  }
+
   res.send(animals.rows[0]);
 });
 
-export const bySpecie=catchErrors(async(req: Request, res: Response): Promise<void>=> {
+export const bySpecie = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const specie = req.params.specie;
-  const animalsBySpecie= await getAnimalsBySpecie(specie);
+  const animalsBySpecie = await getAnimalsBySpecie(specie);
   res.send(animalsBySpecie.rows);
 });
