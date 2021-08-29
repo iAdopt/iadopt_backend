@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { ApiError, catchErrors } from '../middlewares/errorHandler';
 import { getAllAnimals, getAnimalById, getAnimalsByFilter, getAnimalsBySpecie } from '../services/animals.services';
 
-const NUMBER_OF_REGIONS = 42;
+const NUMBER_OF_REGIONS = 41;
 
 export const all = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const animals = await getAllAnimals();

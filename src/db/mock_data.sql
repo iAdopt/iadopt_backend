@@ -1,11 +1,11 @@
 INSERT INTO animals (name, species, birthdate, gender, status, location, description)
-VALUES ('Mike', 'dog', '2017-02-20', 'male', 'new', 2, 'Lorem ipsum...');
+VALUES ('Iadopt', 'dog', '2017-02-20', 'male', 'new', 2, 'Lorem ipsum...');
 
 INSERT INTO animals (name, species, birthdate, gender, status, location, description)
-VALUES ('Mike', 'cat', '2021-02-20', 'male', 'new', 10, 'Lorem ipsum...');
+VALUES ('Iadopt', 'cat', '2021-02-20', 'male', 'new', 10, 'Lorem ipsum...');
 
 INSERT INTO animals (name, species, birthdate, gender, status, location, description)
-VALUES ('Mike', 'dog', '2017-02-20', 'male', 'new', 2, 'Lorem ipsum...');
+VALUES ('Iadopt', 'dog', '2017-02-20', 'male', 'new', 2, 'Lorem ipsum...');
 
 INSERT INTO animals (name, species, birthdate, gender, status, location, description)
 VALUES ('Iadopt', 'cat', '2017-02-20', 'male', 'new', 40, 'Lorem ipsum...');
