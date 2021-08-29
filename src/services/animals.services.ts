@@ -1,61 +1,44 @@
 import { QueryResult } from 'pg';
-//import { ApiError } from '../middlewares/errorHandler';
 import { dbErrorWrapper } from './dbErrorWrapper';
 import query from '../db';
 
-export const getAllAnimals = dbErrorWrapper(async (): Promise<QueryResult<any>> => {
-  const rows = await query('SELECT * FROM animals', []);
-  return rows;
+export const getAllAnimals = dbErrorWrapper(async (): Promise<QueryResult> => {
+  return await query('SELECT * FROM animals', []);
 });
 
-export const getAnimalById = dbErrorWrapper(async (id: any): Promise<QueryResult<any>> => {
-  const rows = await query('SELECT * FROM animals WHERE id= $1::uuid', [id]);
-  return rows;
+export const getAnimalById = dbErrorWrapper(async (id: any): Promise<QueryResult> => {
+  return await query('SELECT * FROM animals WHERE id= $1::uuid', [id]);
 });
 
-export const getAnimalsByFilter = dbErrorWrapper(async (species: any, age: any, gender: any, status: any, location: any): Promise<QueryResult<any>> => {
-  let rows = null;
-  let parameters = new Array();
-  let queryGender = '';
-  let queryState = '';
-  let queryAge = '';
-  let queryLocation = '';
-  let i = 1;
-  let paramQueryAge = '';
-
-  parameters.push(species.toUpperCase());
-
-  if (gender !== 'allGender') {
-    i++;
-    parameters.push(gender.toUpperCase());
-    queryGender = `AND gender=$${i}`;
-  }
-  if (age !== 'allAge') {
-    if (age === 'puppy') {
-      paramQueryAge = '<12';
-    }
-    else {
-      paramQueryAge = '>=12';
-    }
-  }
-  if (status !== 'allStatus') {
-    i++;
-    parameters.push(status.toUpperCase());
-    queryState = `AND status=$${i}`;
-  }
-  if (location !== 'allLocation') {
-    i++;
-    parameters.push(parseInt(location));
-    queryLocation = `AND location=$${i}`;
-  }
-
-  queryAge = `AND (DATE_PART('year',CURRENT_DATE)-DATE_PART('year',birthdate))*12+(DATE_PART('month',CURRENT_DATE)-DATE_PART('month',birthdate))${paramQueryAge}`;
-  rows = await query(`SELECT * FROM animals WHERE species=$1 ${queryGender} ${queryState} ${queryAge} ${queryLocation}`, [...parameters]);
-
-  return rows;  
+export const getAnimalsBySpecie = dbErrorWrapper(async (specie: any): Promise<QueryResult> => {
+  return await query('SELECT * FROM animals WHERE specie=$1', [specie]);
 });
 
-export const getAnimalsBySpecie = dbErrorWrapper(async (species: any): Promise<QueryResult<any>> => {
-  const rows = await query('SELECT * FROM animals WHERE species=$1', [species.toUpperCase()]);
-  return rows;
+interface filterArgs {
+  specie: string;
+  age: string;
+  gender: string;
+  status: string,
+  location: number;
+}
+
+export const getAnimalsByFilter = dbErrorWrapper(async (args: filterArgs): Promise<QueryResult> => {
+  const filterQuery = `
+    SELECT 
+        * 
+    FROM (
+        SELECT 
+            *,
+            CASE WHEN date_part('year', age(birthdate)) < 1 then 'puppy' 
+            else 'adult' END AS age              
+        FROM animals
+    ) AS A
+    WHERE 
+        ($1::specie_enum IS NULL OR specie = $1) AND
+        ($2::text IS NULL OR age = $2) AND
+        ($3::gender_enum IS NULL OR gender = $3) AND
+        ($4::status_enum IS NULL OR status = $4) AND 
+        ($5::int IS NULL OR location = $5)
+  `;
+  return await query(filterQuery, [args.specie, args.age, args.gender, args.status, args.location]);
 });

@@ -2,8 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 
 class ApiError extends Error {
   statusCode: number;
-  name: string;
-  message: string;
 
   constructor (status: number, message: string) {
     super();
@@ -17,10 +15,12 @@ const errorHandleMiddleware = (error: ApiError, req: Request, res: Response, nex
   if (error.name === 'ApiError') {
     const { statusCode, message } = error;
     return res.status(statusCode).send({ error: message });
+  } else {
+    return res.send({ error: error.message });
   }
 };
 
-const catchErrors = (route: Function) => async (req: Request, res: Response, next: Function, ...args: any): Promise<void> => {
+const catchErrors = (route: Function) => async (req: Request, res: Response, next: NextFunction, ...args: any): Promise<void> => {
   try {
     await route(req, res, next, ...args);
   } catch (err) {

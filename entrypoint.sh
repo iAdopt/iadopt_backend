@@ -11,5 +11,7 @@ echo "Running migrations..."
 
 npm run migrate up
 
+echo "Compiling and running server."
+
 npm run build
-npm run start
+npm run "$1"
