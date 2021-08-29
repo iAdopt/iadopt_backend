@@ -52,7 +52,10 @@ const validFilterValues: { [key: string]: any[] } = {
   age: ['puppy', 'adult', undefined],
   gender: ['female', 'male', undefined],
   status: ['urgent', 'new', undefined],
-  location: [...Array.from({ length: NUMBER_OF_REGIONS }, (_, i) => i + 1), undefined]
+  location: [...Array.from(
+    { length: NUMBER_OF_REGIONS },
+    (_, i) => i + 1).map(element => element.toString()
+  ), undefined]
 };
 
 const checkFilterValues = (key: string, value: any): any => {
