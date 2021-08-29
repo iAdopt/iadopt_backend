@@ -49,7 +49,8 @@ const validValues: { [key: string]: string[] } = {
   specie: ['cat', 'dog', undefined],
   age: ['puppy', 'adult', undefined],
   gender: ['female', 'male', undefined],
-  status: ['urgent', 'new', undefined]
+  status: ['urgent', 'new', undefined],
+  location: [undefined]
 };
 
 const checkFilterValues = (key: string, value: any): any => {
