@@ -10,12 +10,12 @@ export const getAnimalById = dbErrorWrapper(async (id: any): Promise<QueryResult
   return await query('SELECT * FROM animals WHERE id= $1::uuid', [id]);
 });
 
-export const getAnimalsBySpecie = dbErrorWrapper(async (specie: any): Promise<QueryResult> => {
-  return await query('SELECT * FROM animals WHERE specie=$1', [specie]);
+export const getAnimalsByspecies = dbErrorWrapper(async (species: any): Promise<QueryResult> => {
+  return await query('SELECT * FROM animals WHERE species=$1', [species]);
 });
 
 interface filterArgs {
-  specie: string;
+  species: string;
   age: string;
   gender: string;
   status: string,
@@ -34,11 +34,11 @@ export const getAnimalsByFilter = dbErrorWrapper(async (args: filterArgs): Promi
         FROM animals
     ) AS A
     WHERE 
-        ($1::specie_enum IS NULL OR specie = $1) AND
+        ($1::species_enum IS NULL OR species = $1) AND
         ($2::text IS NULL OR age = $2) AND
         ($3::gender_enum IS NULL OR gender = $3) AND
         ($4::status_enum IS NULL OR status = $4) AND 
         ($5::int IS NULL OR location = $5)
   `;
-  return await query(filterQuery, [args.specie, args.age, args.gender, args.status, args.location]);
+  return await query(filterQuery, [args.species, args.age, args.gender, args.status, args.location]);
 });

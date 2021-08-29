@@ -1,7 +1,7 @@
 import { validate as uuidValidate } from 'uuid';
 import { Request, Response } from 'express';
 import { ApiError, catchErrors } from '../middlewares/errorHandler';
-import { getAllAnimals, getAnimalById, getAnimalsByFilter, getAnimalsBySpecie } from '../services/animals.services';
+import { getAllAnimals, getAnimalById, getAnimalsByFilter, getAnimalsByspecies } from '../services/animals.services';
 
 const NUMBER_OF_REGIONS = 41;
 
@@ -29,13 +29,13 @@ export const byId = catchErrors(async (req: Request, res: Response): Promise<voi
   res.send(animals.rows[0]);
 });
 
-export const bySpecie = catchErrors(async (req: Request, res: Response): Promise<void> => {
-  const specie = req.params.specie;
-  if (!specie) {
-    throw new ApiError(400, 'Missing required "specie"');
+export const byspecies = catchErrors(async (req: Request, res: Response): Promise<void> => {
+  const species = req.params.species;
+  if (!species) {
+    throw new ApiError(400, 'Missing required "species"');
   }
-  const animalsBySpecie = await getAnimalsBySpecie(specie);
-  res.send(animalsBySpecie.rows);
+  const animalsByspecies = await getAnimalsByspecies(species);
+  res.send(animalsByspecies.rows);
 });
 
 export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
@@ -48,7 +48,7 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
 });
 
 const validFilterValues: { [key: string]: any[] } = {
-  specie: ['cat', 'dog', undefined],
+  species: ['cat', 'dog', undefined],
   age: ['puppy', 'adult', undefined],
   gender: ['female', 'male', undefined],
   status: ['urgent', 'new', undefined],
