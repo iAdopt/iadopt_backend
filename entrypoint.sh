@@ -11,10 +11,7 @@ echo "Running migrations..."
 
 npm run migrate up
 
-<<<<<<< HEAD
-=======
 echo "Compiling and running server."
 
->>>>>>> master
 npm run build
 npm run start

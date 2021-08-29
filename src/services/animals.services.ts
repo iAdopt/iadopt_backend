@@ -11,30 +11,6 @@ export const getAnimalById = dbErrorWrapper(async (id: any): Promise<QueryResult
 });
 
 export const getAnimalsBySpecie = dbErrorWrapper(async (specie: any): Promise<QueryResult> => {
-<<<<<<< HEAD
-  return await query('SELECT * FROM animals WHERE specie=$1', [specie]);
-});
-
-export const getAnimalsByFilter = dbErrorWrapper(async (specie: string, isPuppy: boolean, gender: string, status: string, location: number): Promise<QueryResult> => {
-  const filterQuery = `
-    SELECT 
-        * ,
-        case when calculated age < 1 then true
-            else false as isPuppy
-    FROM (
-        SELECT 
-            *,
-            date_part('year', age(birthdate)) as age    
-        FROM animals
-    )
-    WHERE 
-        ($1 IS NULL OR species = $1) AND
-        ($2 IS NULL OR gender = $2) AND
-        ($3 IS NULL OR isPuppy = $3) AND
-        ($4 IS NULL OR location = $4)
-  `;
-  return await query(filterQuery, [specie, isPuppy, gender, status, location]);
-=======
   return await query('SELECT * FROM animals WHERE species=$1', [specie]);
 });
 
@@ -65,5 +41,4 @@ export const getAnimalsByFilter = dbErrorWrapper(async (args: filterArgs): Promi
         ($5::int IS NULL OR location = $5)
   `;
   return await query(filterQuery, [args.specie, args.age, args.gender, args.status, args.location]);
->>>>>>> master
 });

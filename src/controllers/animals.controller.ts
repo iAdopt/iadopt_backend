@@ -38,19 +38,10 @@ export const bySpecie = catchErrors(async (req: Request, res: Response): Promise
 
 export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
   let params: { [key: string]: string } = { };
-<<<<<<< HEAD
-  Object.entries(req.query).forEach(([key, value]) => {
-    params = { ...params, ...checkFilterValues(key, value) };
-  });
-  // @ts-ignore
-  const filteredAnimals = await getAnimalsByFilter(...params);
-=======
   Object.entries(validValues).forEach(([key, _]) => {
     params = { ...params, ...checkFilterValues(key, req.query[key]) };
   });
-  console.log(params);
   const filteredAnimals = await getAnimalsByFilter({ ...params });
->>>>>>> master
   res.send(filteredAnimals.rows);
 });
 
@@ -58,25 +49,12 @@ const validValues: { [key: string]: string[] } = {
   specie: ['cat', 'dog', undefined],
   age: ['puppy', 'adult', undefined],
   gender: ['female', 'male', undefined],
-<<<<<<< HEAD
   status: ['urgent', 'new', undefined]
-};
-
-const checkFilterValues = (key: string, value: any): any => {
-  if (!(value in validValues[key])) {
-    throw new ApiError(400, `Invalid ${key}.`);
-  }
-  return { key: value || null };
-=======
-  status: ['urgent', 'new', undefined],
-  location: [undefined]
 };
 
 const checkFilterValues = (key: string, value: any): any => {
   if (!(validValues[key].includes(value))) {
     throw new ApiError(400, `Invalid ${key}.`);
   }
-
   return { [key]: value || null };
->>>>>>> master
 };
