@@ -6,10 +6,10 @@ scalar Date
     type Query {
         animals: [Animal!]!
         animal(id: ID!): Animal
-        specie(specie: Specie_enum): [Animal]
+        species(species: Species_enum): [Animal]
         gender(gender: Gender_enum): [Animal]
         animalsFilter(
-            specie: Specie_enum, 
+            species: Species_enum, 
             gender: Gender_enum, 
             status: Status_enum, 
             location: Int
@@ -19,7 +19,7 @@ scalar Date
     type Animal {
         id: ID!,
         name: String!,
-        specie:Specie_enum!,
+        species: Species_enum!,
         birthdate: Date!,
         gender: Gender_enum!,
         age: Age_enum!,
@@ -28,7 +28,7 @@ scalar Date
         description: String!
     }
     
-    enum Specie_enum{
+    enum Species_enum{
         cat
         dog
     }

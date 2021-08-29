@@ -10,8 +10,8 @@ const resolvers = {
       const response = await fetch(`http://localhost:8080/api/animals/byId/${args.id}`);
       return response.json();
     },
-    specie: async (parent:any, args: any): Promise<JSON> => {
-      const response = await fetch(`http://localhost:8080/api/animals/bySpecie/${args.specie}`);
+    species: async (parent:any, args: any): Promise<JSON> => {
+      const response = await fetch(`http://localhost:8080/api/animals/byspecies/${args.species}`);
       return response.json();
     },
     animalsFilter: async (parent: any, args: any): Promise<JSON> => {
