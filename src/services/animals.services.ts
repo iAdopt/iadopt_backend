@@ -11,7 +11,7 @@ export const getAnimalById = dbErrorWrapper(async (id: any): Promise<QueryResult
 });
 
 export const getAnimalsBySpecie = dbErrorWrapper(async (specie: any): Promise<QueryResult> => {
-  return await query('SELECT * FROM animals WHERE species=$1', [specie]);
+  return await query('SELECT * FROM animals WHERE specie=$1', [specie]);
 });
 
 interface filterArgs {
@@ -34,7 +34,7 @@ export const getAnimalsByFilter = dbErrorWrapper(async (args: filterArgs): Promi
         FROM animals
     ) AS A
     WHERE 
-        ($1::species_enum IS NULL OR species = $1) AND
+        ($1::specie_enum IS NULL OR specie = $1) AND
         ($2::text IS NULL OR age = $2) AND
         ($3::gender_enum IS NULL OR gender = $3) AND
         ($4::status_enum IS NULL OR status = $4) AND 

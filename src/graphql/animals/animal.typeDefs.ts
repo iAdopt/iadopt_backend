@@ -6,35 +6,46 @@ scalar Date
     type Query {
         animals: [Animal!]!
         animal(id: ID!): Animal
-        species(species:Species_enum):[Animal]
-        gender(gender:Gender_enum):[Animal]
-        animalsFilter(species:Species_enum!,gender:Gender_enum!,status:Status_enum!,location:Int!):[Animal]
+        specie(specie: Specie_enum): [Animal]
+        gender(gender: Gender_enum): [Animal]
+        animalsFilter(
+            specie: Specie_enum, 
+            gender: Gender_enum, 
+            status: Status_enum, 
+            location: Int
+        ): [Animal]
     }
 
     type Animal {
         id: ID!,
         name: String!,
-        species:Species_enum!,
+        specie:Specie_enum!,
         birthdate: Date!,
-        gender:Gender_enum!,
-        status:Status_enum!,
-        location:Int!
-        description:String!
+        gender: Gender_enum!,
+        age: Age_enum!,
+        status: Status_enum!,
+        location: Int!
+        description: String!
     }
     
-    enum Species_enum{
-        CAT
-        DOG
+    enum Specie_enum{
+        cat
+        dog
     }
 
     enum Gender_enum{
-        MALE
-        FEMALE
+        male
+        female
     }
 
     enum Status_enum{
-        URGENT
-        NEW
+        urgent
+        new
+    }
+
+    enum Age_enum{
+        puppy
+        adult
     }
 `;
 

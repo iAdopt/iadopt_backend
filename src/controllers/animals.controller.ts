@@ -41,7 +41,7 @@ export const bySpecie = catchErrors(async (req: Request, res: Response): Promise
 export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
   let params: { [key: string]: string } = { };
   Object.entries(validFilterValues).forEach(([key, _]) => {
-    params = { ...params, ...checkFilterValues(key, req.query[key]) };
+    params = { ...params, ...checkFilterValues(key, req.body[key]) };
   });
   const filteredAnimals = await getAnimalsByFilter({ ...params });
   res.send(filteredAnimals.rows);

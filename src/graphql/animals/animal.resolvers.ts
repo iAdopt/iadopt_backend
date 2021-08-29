@@ -6,16 +6,22 @@ const resolvers = {
       const response = await fetch('http://localhost:8080/api/animals/all');
       return response.json();
     },
-    animal: async (): Promise<JSON> => {
-      const response = await fetch('http://localhost:8080/api/animals/byId/:animal');
+    animal: async (parent:any, args: any): Promise<JSON> => {
+      const response = await fetch(`http://localhost:8080/api/animals/byId/${args.id}`);
       return response.json();
     },
-    species: async (): Promise<JSON> => {
-      const response = await fetch('http://localhost:8080/api/animals/bySpecie/:species');
+    specie: async (parent:any, args: any): Promise<JSON> => {
+      const response = await fetch(`http://localhost:8080/api/animals/bySpecie/${args.specie}`);
       return response.json();
     },
-    animalsFilter: async (): Promise<JSON> => {
-      const response = await fetch('http://localhost:8080/api/animals/byFilter#animalsByFilter');
+    animalsFilter: async (parent: any, args: any): Promise<JSON> => {
+      const response = await fetch(
+        'http://localhost:8080/api/animals/byFilter/', {
+          method: 'post',
+          body: JSON.stringify(args),
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
       return response.json();
     }
   }
