@@ -6,12 +6,10 @@ import helmet from 'helmet';
 import config from 'config';
 import apiRouter from './routes/index';
 import { errorHandleMiddleware } from './middlewares/errorHandler';
-import schema from './graphql/schema';
+import schema from './graphql';
 
 const app = express();
-app.use(
-  helmet(config.get('helmetConfig')),
-);
+app.use(helmet(config.get('helmetConfig')));
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
@@ -21,10 +19,13 @@ app.use('/api', apiRouter);
 app.use(errorHandleMiddleware);
 
 // GraphQL
-app.use('/graphql', graphqlHTTP(() => ({
-  schema,
-  graphiql: true,
-})));
+app.use(
+  '/graphql',
+  graphqlHTTP(() => ({
+    schema,
+    graphiql: true
+  }))
+);
 
 app.listen(8080, () => {
   console.log('Server running on port http://localhost:8080');

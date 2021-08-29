@@ -1,0 +1,26 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "iadopt_backend"]
+	url = git@github.com:iAdopt/iadopt_backend.git
+	fetch = +refs/heads/*:refs/remotes/iadopt_backend/*
+[branch "backend_structure_idea"]
+	remote = iadopt_backend
+	merge = refs/heads/backend_structure_idea
+[branch "dev"]
+	remote = iadopt_backend
+	merge = refs/heads/dev
+[branch "eslint-setup"]
+	remote = iadopt_backend
+	merge = refs/heads/eslint-setup
+[branch "docker-env"]
+	remote = iadopt_backend
+	merge = refs/heads/docker-env
+[branch "docker-setup"]
+	remote = iadopt_backend
+	merge = refs/heads/docker-setup
+[branch "api_structuring"]
+	remote = iadopt_backend
+	merge = refs/heads/api_structuring
