@@ -11,6 +11,12 @@ exports.up = (pgm) => {
     gender: { type: 'gender_enum' },
     status: { type: 'status_enum' },
     location: { type: 'int' },
-    description: { type: 'string' }
+    description: { type: 'string' },
+    createdAt: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') }
+  });
+  pgm.createTable('logs', {
+    timestamp: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') },
+    process: { type: 'string' },
+    message: { type: 'text' }
   });
 };

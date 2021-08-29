@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import { ApiError, catchErrors } from '../middlewares/errorHandler';
 import { getAllAnimals, getAnimalById, getAnimalsByFilter, getAnimalsBySpecie } from '../services/animals.services';
 
+const NUMBER_OF_REGIONS = 42;
+
 export const all = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const animals = await getAllAnimals();
   res.send(animals.rows);
@@ -38,23 +40,23 @@ export const bySpecie = catchErrors(async (req: Request, res: Response): Promise
 
 export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
   let params: { [key: string]: string } = { };
-  Object.entries(validValues).forEach(([key, _]) => {
+  Object.entries(validFilterValues).forEach(([key, _]) => {
     params = { ...params, ...checkFilterValues(key, req.query[key]) };
   });
   const filteredAnimals = await getAnimalsByFilter({ ...params });
   res.send(filteredAnimals.rows);
 });
 
-const validValues: { [key: string]: string[] } = {
+const validFilterValues: { [key: string]: any[] } = {
   specie: ['cat', 'dog', undefined],
   age: ['puppy', 'adult', undefined],
   gender: ['female', 'male', undefined],
   status: ['urgent', 'new', undefined],
-  location: [undefined]
+  location: [...Array.from({ length: NUMBER_OF_REGIONS }, (_, i) => i + 1), undefined]
 };
 
 const checkFilterValues = (key: string, value: any): any => {
-  if (!(validValues[key].includes(value))) {
+  if (!(validFilterValues[key].includes(value))) {
     throw new ApiError(400, `Invalid ${key}.`);
   }
   return { [key]: value || null };
