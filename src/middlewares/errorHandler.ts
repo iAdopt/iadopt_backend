@@ -15,6 +15,8 @@ const errorHandleMiddleware = (error: ApiError, req: Request, res: Response, nex
   if (error.name === 'ApiError') {
     const { statusCode, message } = error;
     return res.status(statusCode).send({ error: message });
+  } else {
+    return res.send({ error: error.message });
   }
 };
 

@@ -3,17 +3,31 @@ version: '3.7'
 services:
     db:
         image: postgres
+<<<<<<< HEAD
+=======
+        container_name: iadopt_postgres
+>>>>>>> master
         restart: on-failure
         environment: 
             POSTGRES_PASSWORD: iadopt_db
             POSTGRES_USER: admin
             POSTGRES_DB: iadopt
         ports:
+<<<<<<< HEAD
             - 5432:5432
         volumes:
             - postgres_data:/../../var/lib/postgresql
     
     backend:
+=======
+            - '5432:5432'
+        volumes:
+            - postgres_data:/../../var/lib/postgresql
+            - ./src/db:/opt
+
+    backend:
+        container_name: iadopt_backend
+>>>>>>> master
         build:
           context: .
         environment: 
