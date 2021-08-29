@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pool, QueryResult } from 'pg';
 
 const pool = new Pool({
