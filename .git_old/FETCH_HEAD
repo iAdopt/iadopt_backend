@@ -1,7 +1,0 @@
-0459cf939afddc2ad337bb371772ae6186ba6069		branch 'dev' of github.com:iAdopt/iadopt_backend
-cd14462024a81cf0d6a2102adc6353ac3e99847c	not-for-merge	branch 'GraphQl' of github.com:iAdopt/iadopt_backend
-912ca96bee9859a94cf4b371823d7577f4ceeb14	not-for-merge	branch 'chat' of github.com:iAdopt/iadopt_backend
-58a6f7ae5b373a3c7a789e3236c537e4b5a865a3	not-for-merge	branch 'docker-setup' of github.com:iAdopt/iadopt_backend
-dcd4cb30e921ed230a716ce89ebc24c9876f3574	not-for-merge	branch 'eslint-setup' of github.com:iAdopt/iadopt_backend
-b7a6d41a4e540fe1f75c80767536701c6d691c9e	not-for-merge	branch 'master' of github.com:iAdopt/iadopt_backend
-026e5d32c19474225f7309cfec81c8e71eeb3ac9	not-for-merge	branch 'revert-3-chat' of github.com:iAdopt/iadopt_backend
