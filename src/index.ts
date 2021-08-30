@@ -19,9 +19,11 @@ import { errorHandleMiddleware } from "./middlewares/errorHandler";
 import schema from "./graphql";
 
 const app = express();
-app.use(helmet(config.get("helmetConfig")));
-app.use(cors);
-app.use(morgan("dev"));
+
+app.use(helmet(config.get('helmetConfig')));
+app.use(cors());
+app.use(morgan('dev'));
+
 app.use(express.json());
 
 // Chat
@@ -38,10 +40,10 @@ app.use(errorHandleMiddleware);
 
 // GraphQL
 app.use(
-  "/graphql",
+  '/graphql',
   graphqlHTTP(() => ({
     schema,
-    graphiql: true,
+    graphiql: true
   }))
 );
 
