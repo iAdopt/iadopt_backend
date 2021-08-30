@@ -55,7 +55,7 @@ const validFilterValues: { [key: string]: string[] } = {
   location: [...Array.from(
     { length: NUMBER_OF_REGIONS },
     (_, i) => i + 1).map(element => element.toString().padStart(2, '0')
-  ), '']
+  ), '', undefined]
 };
 
 const checkFilterValues = (key: string, value: any): any => {
