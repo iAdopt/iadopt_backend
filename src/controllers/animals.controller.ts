@@ -1,7 +1,7 @@
 import { validate as uuidValidate } from 'uuid';
 import { Request, Response } from 'express';
 import { ApiError, catchErrors } from '../middlewares/errorHandler';
-import { getAllAnimals, getAnimalById, getAnimalsByFilter, getAnimalsByspecies } from '../services/animals.services';
+import { getAllAnimals, getAnimalById, getAnimalsByFilter, getAnimalsBySpecies } from '../services/animals.services';
 
 const NUMBER_OF_REGIONS = 41;
 
@@ -13,7 +13,7 @@ export const all = catchErrors(async (req: Request, res: Response): Promise<void
 export const byId = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const id = req.params.Id;
   if (typeof id !== 'string') {
-    throw new ApiError(400, 'Missing requiered Id.');
+    throw new ApiError(400, 'Missing required Id.');
   }
 
   if (!uuidValidate(id)) {
@@ -29,13 +29,13 @@ export const byId = catchErrors(async (req: Request, res: Response): Promise<voi
   res.send(animals.rows[0]);
 });
 
-export const byspecies = catchErrors(async (req: Request, res: Response): Promise<void> => {
+export const bySpecies = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const species = req.params.species;
   if (!species) {
     throw new ApiError(400, 'Missing required "species"');
   }
-  const animalsByspecies = await getAnimalsByspecies(species);
-  res.send(animalsByspecies.rows);
+  const animalsBySpecies = await getAnimalsBySpecies(species);
+  res.send(animalsBySpecies.rows);
 });
 
 export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
@@ -47,11 +47,11 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
   res.send(filteredAnimals.rows);
 });
 
-const validFilterValues: { [key: string]: any[] } = {
-  species: ['cat', 'dog', ''],
-  age: ['puppy', 'adult', ''],
-  gender: ['female', 'male', ''],
-  status: ['urgent', 'new', ''],
+const validFilterValues: { [key: string]: string[] } = {
+  species: ['cat', 'dog', '', undefined],
+  age: ['baby', 'adult', '', undefined],
+  gender: ['female', 'male', '', undefined],
+  status: ['urgent', 'new', '', undefined],
   location: [...Array.from(
     { length: NUMBER_OF_REGIONS },
     (_, i) => i + 1).map(element => element.toString().padStart(2, '0')
