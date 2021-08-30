@@ -6,13 +6,13 @@ services:
         container_name: iadopt_postgres
         restart: on-failure
         environment:
-            POSTGRES_PASSWORD: iadopt_db
-            POSTGRES_USER: admin
-            POSTGRES_DB: iadopt
+          POSTGRES_PASSWORD: iadopt_db
+          POSTGRES_USER: admin
+          POSTGRES_DB: iadopt
         ports:
-            - '5432:5432'
+          - '5432:5432'
         volumes:
-          - postgres_data:/../../var/lib/postgresql
+          - postgres_data:/var/lib/postgresql/data
           - ./src/db:/opt
 
     backend:
