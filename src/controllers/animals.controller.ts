@@ -48,14 +48,14 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
 });
 
 const validFilterValues: { [key: string]: any[] } = {
-  species: ['cat', 'dog', undefined],
-  age: ['puppy', 'adult', undefined],
-  gender: ['female', 'male', undefined],
-  status: ['urgent', 'new', undefined],
+  species: ['cat', 'dog', ''],
+  age: ['puppy', 'adult', ''],
+  gender: ['female', 'male', ''],
+  status: ['urgent', 'new', ''],
   location: [...Array.from(
     { length: NUMBER_OF_REGIONS },
-    (_, i) => i + 1).map(element => element.toString()
-  ), undefined]
+    (_, i) => i + 1).map(element => element.toString().padStart(2, '0')
+  ), '']
 };
 
 const checkFilterValues = (key: string, value: any): any => {
