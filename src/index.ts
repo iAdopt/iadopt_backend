@@ -27,6 +27,18 @@ app.use(
   }))
 );
 
+//Image Upload Routes
+app.post('image',(req,res)=>{
+  res.json('image/api');
+});
+
+//Image get Routes
+app.get('image/:filename',(req,res)=>{
+res.json('/image/:filename api');
+});
+
 app.listen(8080, () => {
   console.log('Server running on port http://localhost:8080');
 });
+
+
