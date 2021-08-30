@@ -1,11 +1,11 @@
-import { validate as uuidValidate } from "uuid";
-import { ApiError, catchErrors } from "../middlewares/errorHandler";
-import { Request, Response } from "express";
+import { validate as uuidValidate } from 'uuid';
+import { ApiError, catchErrors } from '../middlewares/errorHandler';
+import { Request, Response } from 'express';
 import {
   createUser,
   getAllUsers,
-  getUserById,
-} from "../services/user.services";
+  getUserById
+} from '../services/user.services';
 
 export const onGetAllUsers = catchErrors(
   async (req: Request, res: Response): Promise<void> => {
@@ -18,12 +18,12 @@ export const onGetUserById = catchErrors(
   async (req: Request, res: Response): Promise<void> => {
     const id = req.params.id;
 
-    if (typeof id !== "string") {
-      throw new ApiError(400, "Missing requiered Id.");
+    if (typeof id !== 'string') {
+      throw new ApiError(400, 'Missing requiered Id.');
     }
 
     if (!uuidValidate(id)) {
-      throw new ApiError(400, "Specified Id is not a valid uuid");
+      throw new ApiError(400, 'Specified Id is not a valid uuid');
     }
 
     const users = await getUserById(id);

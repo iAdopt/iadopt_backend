@@ -1,24 +1,24 @@
-import mongoose from "mongoose";
-import { v4 } from "uuid";
+import mongoose from 'mongoose';
+import { v4 } from 'uuid';
 
 export const CHAT_ROOM_TYPES = {
-  CONSUMER_TO_CONSUMER: "consumer-to-consumer",
-  CONSUMER_TO_SUPPORT: "consumer-to-support",
+  CONSUMER_TO_CONSUMER: 'consumer-to-consumer',
+  CONSUMER_TO_SUPPORT: 'consumer-to-support'
 };
 
 const chatRoomSchema = new mongoose.Schema(
   {
     _id: {
       type: String,
-      default: () => v4().replace(/\-/g, ""),
+      default: () => v4().replace(/-/g, '')
     },
     userIds: Array,
     type: String,
-    chatInitiator: String,
+    chatInitiator: String
   },
   {
     timestamps: true,
-    collection: "chatrooms",
+    collection: 'chatrooms'
   }
 );
 
@@ -31,30 +31,30 @@ chatRoomSchema.statics.initiateChat = async function (
     const availableRoom = await this.findOne({
       userIds: {
         $size: userIds.length,
-        $all: [...userIds],
+        $all: [...userIds]
       },
-      type,
+      type
     });
     if (availableRoom) {
       return {
         isNew: false,
-        message: "retrieving an old chat room",
+        message: 'retrieving an old chat room',
         chatRoomId: availableRoom._doc._id,
-        type: availableRoom._doc.type,
+        type: availableRoom._doc.type
       };
     }
 
     const newRoom = await this.create({ userIds, type, chatInitiator });
     return {
       isNew: true,
-      message: "creating a new chatroom",
-      chatRoomId: newRoom._doc._id,
-      type: newRoom._doc.type,
+      message: 'creating a new chatroom',
+      chatRoomId: newRoom.get('_id'),
+      type: newRoom.get('type')
     };
   } catch (error) {
-    console.log("error on start chat method", error);
+    console.log('error on start chat method', error);
     throw error;
   }
 };
 
-export default mongoose.model("ChatRoom", chatRoomSchema);
+export default mongoose.model('ChatRoom', chatRoomSchema);

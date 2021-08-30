@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+
+const CONNECTION_URL =
+  'mongodb+srv://jaumereverte:jaumereverte@clusterpostgrado.mqumw.mongodb.net/iadopt?retryWrites=true&w=majority';
 
 mongoose
-  .connect(
-    "mongodb+srv://jaumereverte:jaumereverte@clusterpostgrado.mqumw.mongodb.net/iadopt?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
-  .then(() => {
-    console.log("MongoDB connected.");
+  .connect(CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   })
-  .catch((err) => console.log("ERROR..." + err.message));
+  .then(() => {
+    console.log('MongoDB connected.');
+  })
+  .catch((err) => console.log('ERROR...' + err.message));

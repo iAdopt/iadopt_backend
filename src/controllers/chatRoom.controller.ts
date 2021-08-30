@@ -1,5 +1,5 @@
-import { ApiError, catchErrors } from "../middlewares/errorHandler";
-import { Request, Response } from "express";
+import { catchErrors } from '../middlewares/errorHandler';
+import { Request, Response } from 'express';
 
 export const initiate = catchErrors(async (req: Request, res: Response) => {});
 export const postMessage = catchErrors(
