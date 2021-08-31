@@ -13,8 +13,7 @@ scalar Date
             gender: Gender_enum
             status: Status_enum
             location: Int
-        ): [Animal]
-        images:[Image_animal!]!
+        ): [Animal]        
     }
 
     type Animal {
@@ -32,9 +31,7 @@ scalar Date
 
     type Image_animal{
         id:ID!
-        filename:String!
-        filepath:String!
-        mimetype:String!
+        filename:String!        
         size:Int
         animal:Animal!
     }
