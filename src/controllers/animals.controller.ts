@@ -8,11 +8,12 @@ import {
   getAnimalsBySpecies,
   insertImage
 } from '../services/animals.services';
+import { processImageBuffers } from '../middlewares/processBuffers';
 
 const NUMBER_OF_REGIONS = 41;
 
 export const all = catchErrors(async (req: Request, res: Response): Promise<void> => {
-  const animals = await getAllAnimals();
+  const animals = await (await processImageBuffers(getAllAnimals))();
   res.send(animals.rows);
 });
 
@@ -40,7 +41,7 @@ export const bySpecies = catchErrors(async (req: Request, res: Response): Promis
   if (!species) {
     throw new ApiError(400, 'Missing required "species"');
   }
-  const animalsBySpecies = await getAnimalsBySpecies(species);
+  const animalsBySpecies = await (await processImageBuffers(getAnimalsBySpecies))(species);
   res.send(animalsBySpecies.rows);
 });
 
@@ -49,7 +50,7 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
   Object.entries(validFilterValues).forEach(([key, _]) => {
     params = { ...params, ...checkFilterValues(key, req.body[key]) };
   });
-  const filteredAnimals = await getAnimalsByFilter({ ...params });
+  const filteredAnimals = await (await processImageBuffers(getAnimalsByFilter))({ ...params });
   res.send(filteredAnimals.rows);
 });
 
