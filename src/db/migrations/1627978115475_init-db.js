@@ -20,4 +20,8 @@ exports.up = (pgm) => {
     process: { type: 'string' },
     message: { type: 'text' }
   });
+  pgm.createTable('images', {
+    blob: { type: 'bytea', notNull: true },
+    animal: { type: 'uuid', references: 'animals' }
+  });
 };
