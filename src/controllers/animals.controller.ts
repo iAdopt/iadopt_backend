@@ -1,7 +1,13 @@
 import { validate as uuidValidate } from 'uuid';
 import { Request, Response } from 'express';
 import { ApiError, catchErrors } from '../middlewares/errorHandler';
-import { getAllAnimals, getAnimalById, getAnimalsByFilter, getAnimalsBySpecies } from '../services/animals.services';
+import {
+  getAllAnimals,
+  getAnimalById,
+  getAnimalsByFilter,
+  getAnimalsBySpecies,
+  insertImage
+} from '../services/animals.services';
 
 const NUMBER_OF_REGIONS = 41;
 
@@ -13,7 +19,7 @@ export const all = catchErrors(async (req: Request, res: Response): Promise<void
 export const byId = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const id = req.params.Id;
   if (typeof id !== 'string') {
-    throw new ApiError(400, 'Missing requiered Id.');
+    throw new ApiError(400, 'Missing required Id.');
   }
 
   if (!uuidValidate(id)) {
@@ -47,7 +53,7 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
   res.send(filteredAnimals.rows);
 });
 
-const validFilterValues: { [key: string]: any[] } = {
+const validFilterValues: { [key: string]: string[] } = {
   species: ['cat', 'dog', '', undefined],
   age: ['baby', 'adult', '', undefined],
   gender: ['female', 'male', '', undefined],
@@ -55,7 +61,7 @@ const validFilterValues: { [key: string]: any[] } = {
   location: [...Array.from(
     { length: NUMBER_OF_REGIONS },
     (_, i) => i + 1).map(element => element.toString().padStart(2, '0')
-  ), '']
+  ), '', undefined]
 };
 
 const checkFilterValues = (key: string, value: any): any => {
@@ -64,3 +70,9 @@ const checkFilterValues = (key: string, value: any): any => {
   }
   return { [key]: value || null };
 };
+
+export const uploadImage = catchErrors(async (req: Request, res: Response): Promise<void> => {
+  const { blob, animal } = req.body;
+  await insertImage(blob, animal);
+  res.status(200).send('OK');
+});

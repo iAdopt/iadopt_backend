@@ -3,15 +3,35 @@ import { dbErrorWrapper } from './dbErrorWrapper';
 import query from '../db';
 
 export const getAllAnimals = dbErrorWrapper(async (): Promise<QueryResult> => {
-  return await query('SELECT * FROM animals', []);
+  return await query(
+    `
+        SELECT 
+            *,
+            date_part('year', age(birthdate)) as age
+        FROM animals
+        `, []);
 });
 
 export const getAnimalById = dbErrorWrapper(async (id: any): Promise<QueryResult> => {
-  return await query('SELECT * FROM animals WHERE id= $1::uuid', [id]);
+  return await query(
+    `
+        SELECT 
+            *,
+            date_part('year', age(birthdate)) as age
+        FROM animals
+        WHERE id = $1::uuid
+        `, [id]);
 });
 
 export const getAnimalsBySpecies = dbErrorWrapper(async (species: any): Promise<QueryResult> => {
-  return await query('SELECT * FROM animals WHERE species=$1', [species]);
+  return await query(
+    `
+        SELECT 
+            *,
+            date_part('year', age(birthdate)) as age
+        FROM animals
+        WHERE species = $1
+        `, [species]);
 });
 
 interface filterArgs {
@@ -42,4 +62,13 @@ export const getAnimalsByFilter = dbErrorWrapper(async (args: filterArgs): Promi
         ($5::int IS NULL OR location = $5)
   `;
   return await query(filterQuery, [args.species, args.age, args.gender, args.status, args.location]);
+});
+
+export const insertImage = dbErrorWrapper(async (blob: any, animal: any): Promise<QueryResult> => {
+  return await query(
+    `
+    INSERT INTO images (blob, animal)
+    VALUES ($1, $2);
+    `, [blob, animal]
+  );
 });

@@ -1,5 +1,5 @@
 exports.up = (pgm) => {
-  pgm.createExtension('uuid-ossp', { ifNotExists: false });
+  pgm.createExtension('uuid-ossp', { ifNotExists: true });
   pgm.createType('species_enum', ['cat', 'dog']);
   pgm.createType('gender_enum', ['female', 'male']);
   pgm.createType('status_enum', ['urgent', 'new']);
@@ -12,11 +12,16 @@ exports.up = (pgm) => {
     status: { type: 'status_enum' },
     location: { type: 'int' },
     description: { type: 'string' },
-    createdAt: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') }
+    createdAt: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') },
+    tags: { type: 'text []' }
   });
   pgm.createTable('logs', {
     timestamp: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') },
     process: { type: 'string' },
     message: { type: 'text' }
+  });
+  pgm.createTable('images', {
+    blob: { type: 'bytea', notNull: true },
+    animal: { type: 'uuid', references: 'animals' }
   });
 };
