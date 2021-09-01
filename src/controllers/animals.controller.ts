@@ -1,7 +1,13 @@
 import { validate as uuidValidate } from 'uuid';
 import { Request, Response } from 'express';
 import { ApiError, catchErrors } from '../middlewares/errorHandler';
-import { getAllAnimals, getAnimalById, getAnimalsByFilter, getAnimalsBySpecies } from '../services/animals.services';
+import {
+  getAllAnimals,
+  getAnimalById,
+  getAnimalsByFilter,
+  getAnimalsBySpecies,
+  insertImage
+} from '../services/animals.services';
 
 const NUMBER_OF_REGIONS = 41;
 
@@ -64,3 +70,9 @@ const checkFilterValues = (key: string, value: any): any => {
   }
   return { [key]: value || null };
 };
+
+export const uploadImage = catchErrors(async (req: Request, res: Response): Promise<void> => {
+  const { blob, animal } = req.body;
+  await insertImage(blob, animal);
+  res.status(200).send('OK');
+});
