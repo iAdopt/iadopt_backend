@@ -76,11 +76,10 @@ export const getAnimalsByFilter = dbErrorWrapper(async (args: filterArgs): Promi
   return await query(filterQuery, [args.species, args.age, args.gender, args.status, args.location]);
 });
 
-export const insertImage = dbErrorWrapper(async (blob: any, animal: any): Promise<QueryResult> => {
+export const insertAnimal = dbErrorWrapper(async (args: any): Promise<QueryResult> => {
   return await query(
     `
-    INSERT INTO images (blob, animal)
-    VALUES ($1, $2);
-    `, [blob, animal]
-  );
+    INSERT INTO animals (name, species, birthdate, gender, status, location, description, tags, center)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
+    `, [args.name, args.species, args.age, args.gender, args.status, args.location, args.description, args.tags, args.center]);
 });

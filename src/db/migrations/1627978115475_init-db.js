@@ -19,6 +19,10 @@ exports.up = (pgm) => {
     status: { type: 'status_enum' },
     location: { type: 'int' },
     description: { type: 'string' },
+    vaccinated: { type: 'bool' },
+    sterilized: { type: 'bool' },
+    identified: { type: 'bool' },
+    issues: { type: 'text' },
     createdAt: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') },
     tags: { type: 'text []' },
     center: { type: 'uuid', references: 'centers', notNull: true }
