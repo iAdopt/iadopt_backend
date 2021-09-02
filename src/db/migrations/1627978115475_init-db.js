@@ -21,7 +21,8 @@ exports.up = (pgm) => {
     message: { type: 'text' }
   });
   pgm.createTable('images', {
-    blob: { type: 'bytea', notNull: true ,unique: true},
-    animal: { type: 'uuid', references: 'animals' }
+    blob: { type: 'bytea', notNull: true, unique: true },
+    animal: { type: 'uuid', references: 'animals' },
+    uploadedAt: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') }
   });
 };

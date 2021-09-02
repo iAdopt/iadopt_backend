@@ -1,19 +1,18 @@
 import { validate as uuidValidate } from 'uuid';
 import { Request, Response } from 'express';
-import { ApiError, catchErrors } from '../middlewares/errorHandler';
+import { ApiError, catchErrors } from '../../middlewares/errorHandler';
 import {
   getAllAnimals,
   getAnimalById,
   getAnimalsByFilter,
-  getAnimalsBySpecies,
-  insertImage
-} from '../services/animals.services';
-
-const NUMBER_OF_REGIONS = 41;
+  getAnimalsBySpecies
+} from '../../services/animals.services';
+import { processImageBuffers } from './processImageBuffers';
+import { validFilterValues, checkFilterValues } from './checkFilterValues';
 
 export const all = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const animals = await getAllAnimals();
-  res.send(animals.rows);
+  res.send(processImageBuffers(animals).rows);
 });
 
 export const byId = catchErrors(async (req: Request, res: Response): Promise<void> => {
@@ -40,8 +39,9 @@ export const bySpecies = catchErrors(async (req: Request, res: Response): Promis
   if (!species) {
     throw new ApiError(400, 'Missing required "species"');
   }
-  const animalsBySpecies = await getAnimalsBySpecies(species);
-  res.send(animalsBySpecies.rows);
+
+  const animals = await getAnimalsBySpecies(species);
+  res.send(processImageBuffers(animals).rows);
 });
 
 export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
@@ -49,30 +49,7 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
   Object.entries(validFilterValues).forEach(([key, _]) => {
     params = { ...params, ...checkFilterValues(key, req.body[key]) };
   });
-  const filteredAnimals = await getAnimalsByFilter({ ...params });
-  res.send(filteredAnimals.rows);
-});
 
-const validFilterValues: { [key: string]: string[] } = {
-  species: ['cat', 'dog', '', undefined],
-  age: ['baby', 'adult', '', undefined],
-  gender: ['female', 'male', '', undefined],
-  status: ['urgent', 'new', '', undefined],
-  location: [...Array.from(
-    { length: NUMBER_OF_REGIONS },
-    (_, i) => i + 1).map(element => element.toString().padStart(2, '0')
-  ), '', undefined]
-};
-
-const checkFilterValues = (key: string, value: any): any => {
-  if (!(validFilterValues[key].includes(value))) {
-    throw new ApiError(400, `Invalid ${key}.`);
-  }
-  return { [key]: value || null };
-};
-
-export const uploadImage = catchErrors(async (req: Request, res: Response): Promise<void> => {
-  const { blob, animal } = req.body;
-  await insertImage(blob, animal);
-  res.status(200).send('OK');
+  const animals = await getAnimalsByFilter({ ...params });
+  res.send(processImageBuffers(animals).rows);
 });
