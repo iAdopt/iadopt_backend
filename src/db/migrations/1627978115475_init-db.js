@@ -3,6 +3,13 @@ exports.up = (pgm) => {
   pgm.createType('species_enum', ['cat', 'dog']);
   pgm.createType('gender_enum', ['female', 'male']);
   pgm.createType('status_enum', ['urgent', 'new']);
+  pgm.createTable('centers', {
+    id: { type: 'uuid', primaryKey: true, default: pgm.func('uuid_generate_v4()') },
+    name: { type: 'text', notNull: true },
+    email: { type: 'text', notNull: true },
+    phone: { type: 'text', notNull: true },
+    address: { type: 'text', notNull: true }
+  });
   pgm.createTable('animals', {
     id: { type: 'uuid', primaryKey: true, default: pgm.func('uuid_generate_v4()') },
     name: { type: 'string' },
@@ -13,7 +20,8 @@ exports.up = (pgm) => {
     location: { type: 'int' },
     description: { type: 'string' },
     createdAt: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') },
-    tags: { type: 'text []' }
+    tags: { type: 'text []' },
+    center: { type: 'uuid', references: 'centers', notNull: true }
   });
   pgm.createTable('logs', {
     timestamp: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') },
