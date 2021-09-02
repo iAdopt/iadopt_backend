@@ -26,6 +26,7 @@ scalar Date
         status: Status_enum!  
         location: Int!
         description: String!
+        tags:[String!]!
         image:[Image_animal!]
     }
 
