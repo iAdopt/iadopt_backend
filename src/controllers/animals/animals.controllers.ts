@@ -5,7 +5,7 @@ import {
   getAllAnimals,
   getAnimalById,
   getAnimalsByFilter,
-  getAnimalsBySpecies
+  getAnimalsBySpecies, insertAnimal
 } from '../../services/animals.services';
 import { processImageBuffers } from './processImageBuffers';
 import { validFilterValues, checkFilterValues } from './checkFilterValues';
@@ -52,4 +52,9 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
 
   const animals = await getAnimalsByFilter({ ...params });
   res.send(processImageBuffers(animals).rows);
+});
+
+export const uploadAnimal = catchErrors(async (req: Request, res: Response): Promise<void> => {
+  const result = await insertAnimal(req.body);
+  res.send(result);
 });
