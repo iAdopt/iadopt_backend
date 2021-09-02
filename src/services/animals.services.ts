@@ -80,6 +80,6 @@ export const insertAnimal = dbErrorWrapper(async (args: any): Promise<QueryResul
   return await query(
     `
     INSERT INTO animals (name, species, birthdate, gender, status, location, description, tags, center)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9::uuid);
     `, [args.name, args.species, args.age, args.gender, args.status, args.location, args.description, args.tags, args.center]);
 });
