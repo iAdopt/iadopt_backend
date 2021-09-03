@@ -1,11 +1,18 @@
-import { catchErrors } from '../../middlewares/errorHandler';
+import { ApiError, catchErrors } from '../../middlewares/errorHandler';
 import { Request, Response } from 'express';
-import { getAnimalImages, insertImage } from '../../services/images.services';
+import { getAnimalImages, insertImage, getImage } from '../../services/images.services';
+
 
 export const uploadImage = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const { blob, animal } = req.body;
-  await insertImage(blob, animal);
-  res.status(200).send({ status: 'Image uploaded!' });
+  const existImage = getImage(blob);
+
+  if (!existImage) {
+    await insertImage(blob, animal);
+    res.status(200).send({ status: 'Image uploaded!' });
+  } else {
+    throw new ApiError(400, 'Repeated Image');
+  }
 });
 
 export const byAnimal = catchErrors(async (req: Request, res: Response): Promise<void> => {
@@ -19,3 +26,5 @@ export const byAnimal = catchErrors(async (req: Request, res: Response): Promise
 
   res.status(200).send(images.rows);
 });
+
+
