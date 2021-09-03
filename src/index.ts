@@ -8,7 +8,13 @@ import apiRouter from './routes/index';
 import { errorHandleMiddleware } from './middlewares/errorHandler';
 import schema from './graphql';
 
+
+
 const app = express();
+const fileUpload = require('express-fileupload');
+
+require('./services/images.services').addRouterToApp(app);
+
 app.use(helmet(config.get('helmetConfig')));
 app.use(cors());
 app.use(morgan('dev'));
@@ -17,6 +23,7 @@ app.use(express.json());
 // API
 app.use('/api', apiRouter);
 app.use(errorHandleMiddleware);
+app.use(fileUpload);
 
 // GraphQL
 app.use(
