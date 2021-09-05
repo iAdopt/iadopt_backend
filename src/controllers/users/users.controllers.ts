@@ -6,9 +6,9 @@ import { getCenter } from '../../services/centers.services';
 const auth = require('../../services/auth.services');
 
 export const registerUser = catchErrors(async (req: Request, res: Response): Promise<void> => {
-  //trim, lowercase
-  console.log(`req.body:::${req.body.email}`);
+  //trim, lowercase 
   const { email, password, center } = req.body;
+  
   if (!email) {
     throw new ApiError(400, `Missing 'email'`);
   }
@@ -16,8 +16,7 @@ export const registerUser = catchErrors(async (req: Request, res: Response): Pro
     throw new ApiError(400, `Missing 'password'`);
   }
 
-  const existingUser = await getUser(email);
-  console.log(`existingUser.rows ${existingUser}`);
+  const existingUser = await getUser(email);  
 
   if (existingUser) {
     throw new ApiError(400, `User already exists`);
@@ -25,14 +24,11 @@ export const registerUser = catchErrors(async (req: Request, res: Response): Pro
 
   const id = getCenter(center);
   const hashedPassword = await auth.hashPassword(password);
-  console.log(`hashedPasswotd:::${hashedPassword}`);
-  console.log(`existingCenter ${id}`);
-
+  
 
   if (id=== undefined) {
     throw new ApiError(400, `Center doesn't exist`);
-  }
-  console.log(`user controller:::${email},${hashedPassword},${center}`);
+  }  
   
   req.body.password=hashedPassword;
   await insertUser(req.body);
@@ -44,18 +40,20 @@ export const login = catchErrors(async (req: Request, res: Response): Promise<vo
 
   if (!email) {
     throw new ApiError(400, `Missing 'email'`);
-  }
-  const user = getUser(email, password);
-  if (!user) {
-    throw new ApiError(400, `Wrong email/password combination`);
-  }
+  }  
   if (!password) {
     throw new ApiError(400, `Missing 'password'`);
   }
-  const passwordMatches = await auth.comparePasswords(password, user);
+  const user = await getUser(email);
+  if (!user) {
+    throw new ApiError(400, `Wrong email/password combination`);
+  }
+ 
+  const passwordMatches = await auth.comparePasswords(password, user.password);
   if (!passwordMatches) {
     throw new ApiError(400, `Wrong email/password combination`);
   }
+ 
   const token = auth.createToken(email);
   res.status(200).send(token);
 });

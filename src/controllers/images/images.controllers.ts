@@ -5,7 +5,7 @@ import { getAnimalImages, insertImage, getImage } from '../../services/images.se
 
 export const uploadImage = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const { blob, animal } = req.body;
-  const existImage = getImage(blob);
+  const existImage = await getImage(blob);
 
   if (!existImage) {
     await insertImage(blob, animal);
@@ -23,7 +23,6 @@ export const byAnimal = catchErrors(async (req: Request, res: Response): Promise
     image.blob = image.blob.toString('base64');
     return image;
   });
-
   res.status(200).send(images.rows);
 });
 

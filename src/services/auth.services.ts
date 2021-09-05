@@ -4,8 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { JWT_EXPIRATION_TIME, JWT_SECRET } = require('../../config');
 
-const hashPassword = async (password: any) => {
-    console.log(`hashPassword:::${18087}`);
+const hashPassword = async (password: any) => {   
     const salt = await bcrypt.genSalt();
     return bcrypt.hash(password, salt);
 }

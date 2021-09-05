@@ -6,7 +6,6 @@ import { builtinModules } from 'module';
 export const insertImage = dbErrorWrapper(async (blob: any, animal: any): Promise<QueryResult> => {
 
   return await query(
-
     `
     INSERT INTO images (blob, animal)
     VALUES ($1, $2);
@@ -25,7 +24,8 @@ export const getAnimalImages = dbErrorWrapper(async (animal: any): Promise<Query
 });
 
 export const getImage = dbErrorWrapper(async (blob: any): Promise<QueryResult> => {
-  return await query(
+  const image= await query(
     `SELECT * FROM images WHERE blob=$1;`, [blob]
   );
+  return image.rows[0]; 
 });
