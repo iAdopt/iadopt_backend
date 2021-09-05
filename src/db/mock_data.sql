@@ -12,21 +12,6 @@ VALUES ('45398a6b-6582-4bbc-abda-84f97a8b1a15', 'Amazing Centre', 'example@email
 INSERT INTO centers (id, name, email, phone, address)
 VALUES ('0c266122-e95f-4a7c-88b6-5794c281896a', 'Fullstack Centre', 'example@email.com', '+34 999 99 99 99', 'Dirección de Ejemplo, 4 Casa');
 
-/*Users*/
-
-INSERT INTO users(email,password,center)
-VALUES('jordi@gmail.com','12345','04279cb8-312a-488a-a14b-fbe44165af77');
-
-INSERT INTO users(email,password,center)
-VALUES('ana@gmail.com','12345','378211fd-344f-44ad-ba71-bf58bf957a67');
-
-INSERT INTO users(email,password,center)
-VALUES('toni@gmail.com','12345','45398a6b-6582-4bbc-abda-84f97a8b1a15');
-
-INSERT INTO users(email,password,center)
-VALUES('pepa@gmail.com','12345','0c266122-e95f-4a7c-88b6-5794c281896a');
-
-
 /* Animals */
 
 INSERT INTO animals (id, name, species, birthdate, gender, status, location, description, center)
