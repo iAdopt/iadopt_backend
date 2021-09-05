@@ -7,6 +7,6 @@ router.get('/get/all', animalsController.all);
 router.get('/get/byId/:Id', animalsController.byId);
 router.get('/get/bySpecies/:species', animalsController.bySpecies);
 router.post('/get/byFilter', animalsController.byFilter);
-router.post('/post/animal', animalsController.uploadAnimal);
+router.post('/post/animal/', animalsController.uploadAnimal);
 
 export default router;

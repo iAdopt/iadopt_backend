@@ -23,7 +23,7 @@ const resolvers = {
         }
       );
       return response.json();
-    }
+    }    
   }
 };
 
