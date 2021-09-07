@@ -1,8 +1,10 @@
 import { AnyRecord } from "dns";
+require("dotenv").config({ path: __dirname + "/../.env" });
+
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { JWT_EXPIRATION_TIME, JWT_SECRET } = require('../../config');
+//const { JWT_EXPIRATION_TIME, JWT_SECRET } = require('../../config');
 
 const hashPassword = async (password: any) => {   
     const salt = await bcrypt.genSalt();
@@ -14,8 +16,8 @@ const comparePasswords = async (password: any, dbPassword: any) => {
 }
 
 const createToken = (email: any) => {
-    const token = jwt.sign({ email }, JWT_SECRET, {
-        expiresIn: JWT_EXPIRATION_TIME
+    const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRATION_TIME
     });
     return{
         accesToken:token,
