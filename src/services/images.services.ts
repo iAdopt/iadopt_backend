@@ -1,15 +1,23 @@
 import { dbErrorWrapper } from './dbErrorWrapper';
 import { QueryResult } from 'pg';
 import query from '../db';
-import { builtinModules } from 'module';
 
 export const insertImage = dbErrorWrapper(async (blob: any, animal: any): Promise<QueryResult> => {
-
   return await query(
     `
     INSERT INTO images (blob, animal)
     VALUES ($1, $2);
     `, [blob, animal]
+  );
+});
+
+export const existImageByAnimal = dbErrorWrapper(async (animal: any, blob: any): Promise<QueryResult> => {
+  return await query(
+    `
+    SELECT *
+    FROM images
+    WHERE animal = $1::uuid AND blob = $2
+  `, [animal, blob]
   );
 });
 
@@ -21,11 +29,4 @@ export const getAnimalImages = dbErrorWrapper(async (animal: any): Promise<Query
     WHERE animal = $1::uuid
     `, [animal]
   );
-});
-
-export const getImage = dbErrorWrapper(async (blob: any): Promise<QueryResult> => {
-  const image= await query(
-    `SELECT * FROM images WHERE blob=$1;`, [blob]
-  );
-  return image.rows[0]; 
 });

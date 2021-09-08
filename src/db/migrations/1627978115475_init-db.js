@@ -1,5 +1,3 @@
-const { randomUUID } = require("crypto");
-
 exports.up = (pgm) => {
   pgm.createExtension('uuid-ossp', { ifNotExists: true });
   pgm.createType('species_enum', ['cat', 'dog']);
@@ -9,6 +7,7 @@ exports.up = (pgm) => {
     id: { type: 'uuid', primaryKey: true, default: pgm.func('uuid_generate_v4()') },
     name: { type: 'text', notNull: true },
     email: { type: 'text', notNull: true },
+    password: { type: 'bytea', notNull: true },
     phone: { type: 'text', notNull: true },
     address: { type: 'text', notNull: true }
   });
@@ -35,14 +34,8 @@ exports.up = (pgm) => {
     message: { type: 'text' }
   });
   pgm.createTable('images', {
-    blob: { type: 'bytea', notNull: true},
+    blob: { type: 'bytea', notNull: true },
     animal: { type: 'uuid', references: 'animals' },
     uploadedAt: { type: 'timestamp', notNull: true, default: pgm.func('current_timestamp') }
-  }); 
- 
-  pgm.createTable('users',{
-    email:{type:'string',notNull:true,unique:true},
-    password:{type:'string',notNull:true},
-    center:{type:'uuid',references:'centers',notNull:true}
   });
 };

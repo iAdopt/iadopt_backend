@@ -1,12 +1,12 @@
 import express from 'express';
 import animalsRouter from './animals.routes';
 import imagesRouter from './images.routes';
-import usersRouter from './users.routes';
+import centersRouter from './centers.routes';
 
 const apiRouter = express.Router();
 
 apiRouter.use('/animals', animalsRouter);
 apiRouter.use('/images', imagesRouter);
-apiRouter.use('/users',usersRouter);
+apiRouter.use('/centers', centersRouter);
 
 export default apiRouter;
