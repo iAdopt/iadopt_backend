@@ -35,12 +35,14 @@ export const login = catchErrors(async (req: Request, res: Response): Promise<vo
   if (!password) {
     throw new ApiError(400, 'Missing password');
   }
-  const center = (await getCenterByEmail(email)).rows[0];
-  if (!center) {
+  const centerQuery = await getCenterByEmail(email);
+
+  if (!centerQuery.rows.length) {
     throw new ApiError(400, 'Center not registered into the database');
   }
 
-  const passwordMatches = await comparePasswords(password, center.password);
+  const center = centerQuery.rows[0];
+  const passwordMatches = await comparePasswords(password, center.password.toString());
   if (!passwordMatches) {
     throw new ApiError(400, 'Wrong email/password combination');
   }

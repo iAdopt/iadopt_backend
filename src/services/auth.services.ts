@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-dotenv.config({ path: path.join(__dirname, '/../.env') });
+dotenv.config({ path: path.join(__dirname, '/../../.env') });
 
 export const hashPassword = async (password: any) => {
   const salt = await bcrypt.genSalt();

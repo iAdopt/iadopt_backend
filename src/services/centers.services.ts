@@ -13,9 +13,9 @@ interface centerArgs {
 export const insertCenter = dbErrorWrapper(async (args: centerArgs): Promise<QueryResult> => {
   return await query(
     `
-    INSERT INTO centers (name, email, phone, address) 
-    VALUES ($1, $2, $3, $4)
-    `, [args.name, args.email, args.phone, args.address]);
+    INSERT INTO centers (name, email, phone, address, password) 
+    VALUES ($1, $2, $3, $4, $5)
+    `, [args.name, args.email, args.phone, args.address, args.password]);
 });
 
 export const getCenterById = dbErrorWrapper(async (id: any): Promise<QueryResult> => {

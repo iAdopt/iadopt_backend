@@ -4,9 +4,9 @@ import { existImageByAnimal, getAnimalImages, insertImage } from '../../services
 
 export const uploadImage = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const { blob, animal } = req.body;
-  const existImage = await existImageByAnimal(blob, blob);
+  const existImage = await existImageByAnimal(animal, blob);
 
-  if (existImage.rows.length) {
+  if (!existImage.rows.length) {
     await insertImage(blob, animal);
     res.status(200).send({ status: 'Image uploaded!' });
   } else {
