@@ -9,7 +9,6 @@ import { errorHandleMiddleware } from './middlewares/errorHandler';
 import schema from './graphql';
 
 const app = express();
-const fileUpload = require('express-fileupload');
 
 app.use(helmet(config.get('helmetConfig')));
 app.use(cors());
@@ -19,7 +18,6 @@ app.use(express.json());
 // API
 app.use('/api', apiRouter);
 app.use(errorHandleMiddleware);
-app.use(fileUpload);
 
 // GraphQL
 app.use(
