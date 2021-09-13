@@ -7,7 +7,8 @@ export const getAllAnimals = dbErrorWrapper(async (): Promise<QueryResult> => {
     `
       SELECT 
         *,
-        date_part('year', age(birthdate)) as age
+        date_part('year', age(birthdate)) as years,
+        date_part('month', age(birthdate)) as months
       FROM animals LEFT JOIN (
           SELECT DISTINCT ON (animal) * FROM images
           ORDER BY animal, images."uploadedAt" desc
@@ -21,7 +22,8 @@ export const getAnimalById = dbErrorWrapper(async (id: any): Promise<QueryResult
     `
       SELECT 
         *,
-        date_part('year', age(birthdate)) as age
+        date_part('year', age(birthdate)) as years,
+        date_part('month', age(birthdate)) as months
       FROM animals
       WHERE id = $1::uuid
       `, [id]);
@@ -32,7 +34,8 @@ export const getAnimalsBySpecies = dbErrorWrapper(async (species: any): Promise<
     `
       SELECT 
         *,
-        date_part('year', age(birthdate)) as age
+        date_part('year', age(birthdate)) as years,
+        date_part('month', age(birthdate)) as months
       FROM animals LEFT JOIN (
         SELECT DISTINCT ON (animal) * FROM images
         ORDER BY animal, images."uploadedAt" desc
@@ -57,7 +60,8 @@ export const getAnimalsByFilter = dbErrorWrapper(async (args: filterArgs): Promi
     FROM (
       SELECT 
         *,
-        date_part('year', age(birthdate)) as age,
+        date_part('year', age(birthdate)) as years,
+        date_part('month', age(birthdate)) as months,
         CASE WHEN date_part('year', age(birthdate)) < 1 then 'baby' 
         else 'adult' END AS ageStatus              
       FROM animals

@@ -9,6 +9,7 @@ import { errorHandleMiddleware } from './middlewares/errorHandler';
 import schema from './graphql';
 
 const app = express();
+
 app.use(helmet(config.get('helmetConfig')));
 app.use(cors());
 app.use(morgan('dev'));

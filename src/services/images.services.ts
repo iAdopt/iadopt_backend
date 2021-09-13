@@ -11,11 +11,20 @@ export const insertImage = dbErrorWrapper(async (blob: any, animal: any): Promis
   );
 });
 
+export const existImageByAnimal = dbErrorWrapper(async (animal: any, blob: any): Promise<QueryResult> => {
+  return await query(
+    `
+    SELECT *
+    FROM images
+    WHERE animal = $1::uuid AND blob = $2
+  `, [animal, blob]
+  );
+});
+
 export const getAnimalImages = dbErrorWrapper(async (animal: any): Promise<QueryResult> => {
   return await query(
     `
-    SELECT
-      *
+    SELECT *     
     FROM images
     WHERE animal = $1::uuid
     `, [animal]

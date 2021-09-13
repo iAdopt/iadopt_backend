@@ -30,7 +30,6 @@ export const byId = catchErrors(async (req: Request, res: Response): Promise<voi
   if (!animals.rows.length) {
     throw new ApiError(400, 'No animal corresponds to the given uuid');
   }
-
   res.send(animals.rows[0]);
 });
 

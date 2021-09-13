@@ -1,16 +1,16 @@
 /* Centers */
 
-INSERT INTO centers (id, name, email, phone, address)
-VALUES ('04279cb8-312a-488a-a14b-fbe44165af77', 'Catlike Centre', 'example@email.com', '+34 999 99 99 99', 'Dirección de Ejemplo, 1 Casa');
+INSERT INTO centers (id, name, email, phone, address, password)
+VALUES ('04279cb8-312a-488a-a14b-fbe44165af77', 'Catlike Centre', 'example1@email.com', '+34 999 99 99 99', 'Dirección de Ejemplo, 1 Casa', '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824');
 
-INSERT INTO centers (id, name, email, phone, address)
-VALUES ('378211fd-344f-44ad-ba71-bf58bf957a67', 'Doglike Centre', 'example@email.com', '+34 999 99 99 99', 'Dirección de Ejemplo, 2 Casa');
+INSERT INTO centers (id, name, email, phone, address, password)
+VALUES ('378211fd-344f-44ad-ba71-bf58bf957a67', 'Doglike Centre', 'example2@email.com', '+34 999 99 99 99', 'Dirección de Ejemplo, 2 Casa', 'b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9');
 
-INSERT INTO centers (id, name, email, phone, address)
-VALUES ('45398a6b-6582-4bbc-abda-84f97a8b1a15', 'Amazing Centre', 'example@email.com', '+34 999 99 99 99', 'Dirección de Ejemplo, 3 Casa');
+INSERT INTO centers (id, name, email, phone, address, password)
+VALUES ('45398a6b-6582-4bbc-abda-84f97a8b1a15', 'Amazing Centre', 'example3@email.com', '+34 999 99 99 99', 'Dirección de Ejemplo, 3 Casa', '47ebf385118a877d3bb15bdbb4877635dd7070f1afce8c1bc2565a1e704fda95');
 
-INSERT INTO centers (id, name, email, phone, address)
-VALUES ('0c266122-e95f-4a7c-88b6-5794c281896a', 'Fullstack Centre', 'example@email.com', '+34 999 99 99 99', 'Dirección de Ejemplo, 4 Casa');
+INSERT INTO centers (id, name, email, phone, address, password)
+VALUES ('0c266122-e95f-4a7c-88b6-5794c281896a', 'Fullstack Centre', 'example4@email.com', '+34 999 99 99 99', 'Dirección de Ejemplo, 4 Casa', '64380ad4b7d8c813c127516833423e494ec25a836260c94948229bc06c7c5cfc');
 
 /* Animals */
 

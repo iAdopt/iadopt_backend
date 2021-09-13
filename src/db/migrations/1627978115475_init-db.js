@@ -5,10 +5,12 @@ exports.up = (pgm) => {
   pgm.createType('status_enum', ['urgent', 'new']);
   pgm.createTable('centers', {
     id: { type: 'uuid', primaryKey: true, default: pgm.func('uuid_generate_v4()') },
-    name: { type: 'text', notNull: true },
-    email: { type: 'text', notNull: true },
-    phone: { type: 'text', notNull: true },
-    address: { type: 'text', notNull: true }
+    name: { type: 'text' },
+    email: { type: 'text', notNull: true, unique: true },
+    password: { type: 'bytea', notNull: true },
+    phone: { type: 'text' },
+    address: { type: 'text' },
+    location: { type: 'int' }
   });
   pgm.createTable('animals', {
     id: { type: 'uuid', primaryKey: true, default: pgm.func('uuid_generate_v4()') },
