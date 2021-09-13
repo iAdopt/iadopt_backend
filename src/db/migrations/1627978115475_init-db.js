@@ -9,7 +9,8 @@ exports.up = (pgm) => {
     email: { type: 'text', notNull: true, unique: true },
     password: { type: 'bytea', notNull: true },
     phone: { type: 'text' },
-    address: { type: 'text' }
+    address: { type: 'text' },
+    location: { type: 'int' }
   });
   pgm.createTable('animals', {
     id: { type: 'uuid', primaryKey: true, default: pgm.func('uuid_generate_v4()') },
