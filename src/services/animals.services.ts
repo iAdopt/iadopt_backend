@@ -81,9 +81,24 @@ export const getAnimalsByFilter = dbErrorWrapper(async (args: filterArgs): Promi
 });
 
 export const insertAnimal = dbErrorWrapper(async (args: any): Promise<QueryResult> => {
+  if (args.vaccinated === undefined || args.vaccinated === '0') {
+    args.vaccinated = true;
+  } else { args.vaccinated = false; }
+
+  if (args.sterilized === undefined || args.sterilized === '0') {
+    args.sterilized = false;
+  } else {
+    args.sterilized = true;
+  }
+  if (args.identified === undefined || args.identified === '0') {
+    args.identified = false;
+  } else {
+    args.identified = true;
+  }
+
   return await query(
     `
-    INSERT INTO animals (name, species, birthdate, gender, status, location, description, tags, center)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9::uuid);
-    `, [args.name, args.species, args.age, args.gender, args.status, args.location, args.description, args.tags, args.center]);
+    INSERT INTO animals (name, species, birthdate, gender, status, location, description, tags, center,vaccinated,sterilized,identified,issues)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9::uuid, $10, $11, $12, $13);
+    `, [args.name, args.species, args.birthdate, args.gender, args.status, args.location, args.description, args.tags, args.center, args.vaccinated, args.sterilized, args.identified, args.issues]);
 });
