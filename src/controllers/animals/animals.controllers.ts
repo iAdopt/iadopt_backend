@@ -54,6 +54,12 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
 });
 
 export const uploadAnimal = catchErrors(async (req: Request, res: Response): Promise<void> => {
-  const result = await insertAnimal(req.body);
+  let { vaccinated, sterilized, identified } = req.body;
+  vaccinated = vaccinated === undefined || vaccinated === '0';
+  sterilized = sterilized === undefined || sterilized === '0';
+  identified = identified === undefined || identified === '0';
+
+  const body = { ...req.body, vaccinated, sterilized, identified };
+  const result = await insertAnimal(body);
   res.send(result);
 });
