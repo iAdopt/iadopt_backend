@@ -3,7 +3,7 @@ import express from 'express';
 
 const router = express.Router();
 
-router.post('/post/image', imagesController.uploadImage);
-router.get('/get/image/:animalId', imagesController.byAnimal);
+router.post('/', imagesController.uploadImage);
+router.get('/:animalId', imagesController.byAnimal);
 
 export default router;
