@@ -10,7 +10,7 @@ export const getAllAnimals = dbErrorWrapper(async (): Promise<QueryResult> => {
         date_part('year', age(birthdate)) as years,
         date_part('month', age(birthdate)) as months
       FROM animals LEFT JOIN (
-          SELECT DISTINCT ON (animal) animal, ENCODE(blob, 'base64') FROM images
+          SELECT DISTINCT ON (animal) animal, ENCODE(blob, 'base64') as blob FROM images
           ORDER BY animal, images."uploadedAt" desc
       ) AS most_recent_animal_image
       ON animals.id = most_recent_animal_image.animal
@@ -37,7 +37,7 @@ export const getAnimalsBySpecies = dbErrorWrapper(async (species: any): Promise<
         date_part('year', age(birthdate)) as years,
         date_part('month', age(birthdate)) as months
       FROM animals LEFT JOIN (
-        SELECT DISTINCT ON (animal) * FROM images
+        SELECT DISTINCT ON (animal) animal, ENCODE(blob, 'base64') as blob FROM images
         ORDER BY animal, images."uploadedAt" desc
       ) AS most_recent_animal_image
       ON animals.id = most_recent_animal_image.animal
@@ -66,7 +66,7 @@ export const getAnimalsByFilter = dbErrorWrapper(async (args: filterArgs): Promi
         else 'adult' END AS ageStatus              
       FROM animals
     ) AS A LEFT JOIN (
-      SELECT DISTINCT ON (animal) * FROM images
+      SELECT DISTINCT ON (animal) animal, ENCODE(blob, 'base64') as blob FROM images
       ORDER BY animal, images."uploadedAt" desc
     ) AS most_recent_animal_image
     ON A.id = most_recent_animal_image.animal
