@@ -7,12 +7,12 @@ import {
   getAnimalsByFilter,
   getAnimalsBySpecies, insertAnimal
 } from '../../services/animals.services';
-import { processImageBuffers } from './processImageBuffers';
+
 import { validFilterValues, checkFilterValues } from './checkFilterValues';
 
 export const all = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const animals = await getAllAnimals();
-  res.send(processImageBuffers(animals).rows);
+  res.send(animals.rows);
 });
 
 export const byId = catchErrors(async (req: Request, res: Response): Promise<void> => {
@@ -40,7 +40,7 @@ export const bySpecies = catchErrors(async (req: Request, res: Response): Promis
   }
 
   const animals = await getAnimalsBySpecies(species);
-  res.send(processImageBuffers(animals).rows);
+  res.send(animals.rows);
 });
 
 export const byFilter = catchErrors(async (req: Request, res: Response): Promise<void> => {
@@ -50,7 +50,7 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
   });
 
   const animals = await getAnimalsByFilter({ ...params });
-  res.send(processImageBuffers(animals).rows);
+  res.send(animals.rows);
 });
 
 export const uploadAnimal = catchErrors(async (req: Request, res: Response): Promise<void> => {

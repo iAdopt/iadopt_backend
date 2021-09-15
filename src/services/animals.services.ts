@@ -10,7 +10,7 @@ export const getAllAnimals = dbErrorWrapper(async (): Promise<QueryResult> => {
         date_part('year', age(birthdate)) as years,
         date_part('month', age(birthdate)) as months
       FROM animals LEFT JOIN (
-          SELECT DISTINCT ON (animal) * FROM images
+          SELECT DISTINCT ON (animal) animal, ENCODE(blob, 'base64') FROM images
           ORDER BY animal, images."uploadedAt" desc
       ) AS most_recent_animal_image
       ON animals.id = most_recent_animal_image.animal
@@ -89,7 +89,7 @@ export const insertAnimal = dbErrorWrapper(async (args: any): Promise<QueryResul
           RETURNING id
     )
     INSERT INTO images (blob, animal)
-    SELECT $14, id
+    SELECT DECODE($14, 'base64'), id
     FROM ins0;
     `, [args.name, args.species, args.birthdate, args.gender, args.status, args.location, args.description, args.tags, args.center, args.vaccinated, args.sterilized, args.identified, args.issues, args.blob]);
 });
