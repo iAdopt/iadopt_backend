@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { logger } from '../utils/logger';
 
 class ApiError extends Error {
   statusCode: number;
@@ -24,6 +25,7 @@ const catchErrors = (route: Function) => async (req: Request, res: Response, nex
   try {
     await route(req, res, next, ...args);
   } catch (err) {
+    await logger('API', err);
     next(err);
   }
 };

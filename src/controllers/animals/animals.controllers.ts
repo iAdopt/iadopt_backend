@@ -8,7 +8,8 @@ import {
   getAnimalsBySpecies, insertAnimal
 } from '../../services/animals.services';
 
-import { validFilterValues, checkFilterValues } from './checkFilterValues';
+import { validFilterValues, checkFilterValues, NUMBER_OF_REGIONS } from './checkFilterValues';
+import { randomInt } from '../../utils/random';
 
 export const all = catchErrors(async (req: Request, res: Response): Promise<void> => {
   const animals = await getAllAnimals();
@@ -54,12 +55,13 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
 });
 
 export const uploadAnimal = catchErrors(async (req: Request, res: Response): Promise<void> => {
-  let { vaccinated, sterilized, identified } = req.body;
+  let { vaccinated, sterilized, identified, location } = req.body;
+  location = location || randomInt(0, NUMBER_OF_REGIONS);
   vaccinated = vaccinated === undefined || vaccinated === '0';
   sterilized = sterilized === undefined || sterilized === '0';
   identified = identified === undefined || identified === '0';
 
-  const body = { ...req.body, vaccinated, sterilized, identified };
+  const body = { ...req.body, vaccinated, sterilized, identified, location };
   const result = await insertAnimal(body);
   res.send(result);
 });

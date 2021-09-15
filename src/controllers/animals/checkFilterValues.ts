@@ -1,6 +1,6 @@
 import { ApiError } from '../../middlewares/errorHandler';
 
-const NUMBER_OF_REGIONS = 41;
+export const NUMBER_OF_REGIONS = 41;
 
 export const validFilterValues: { [key: string]: string[] } = {
   species: ['cat', 'dog', '', undefined],
