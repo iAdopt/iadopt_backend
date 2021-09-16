@@ -1,13 +1,13 @@
 import gql from 'graphql-tag';
 
 const typeDefs = gql`
-scalar Date
+    
+    scalar Date
 
     type Query {
         animals: [Animal!]!
         animal(id: ID!): Animal
         species(species: Species_enum): [Animal]
-        gender(gender: Gender_enum): [Animal]
         animalsFilter(
             species: Species_enum
             gender: Gender_enum
@@ -20,21 +20,18 @@ scalar Date
         id: ID!
         name: String!
         species: Species_enum!
-        birthdate: Date!
-        gender: Gender_enum!
-        age: Age_enum!
-        status: Status_enum!  
-        location: Int!
-        description: String!
-        tags:[String!]!
-        image:[Image_animal!]
-    }
-
-    type Image_animal{
-        id:ID!
-        filename:String!        
-        size:Int
-        animal:Animal!
+        birthdate: Date
+        gender: Gender_enum
+        status: Status_enum  
+        location: Int
+        description: String
+        tags: [String]
+        vaccinated: Boolean
+        sterilized: Boolean
+        identified: Boolean
+        issues: String
+        createdAt: Date
+        blob: String
     }
     
     enum Species_enum{
