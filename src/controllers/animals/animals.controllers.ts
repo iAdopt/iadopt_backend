@@ -56,7 +56,7 @@ export const byFilter = catchErrors(async (req: Request, res: Response): Promise
 
 export const uploadAnimal = catchErrors(async (req: Request, res: Response): Promise<void> => {
   let { vaccinated, sterilized, identified, location } = req.body;
-  location = location || randomInt(0, NUMBER_OF_REGIONS);
+  location = location || randomInt(1, NUMBER_OF_REGIONS);
   vaccinated = vaccinated === undefined || vaccinated === '0';
   sterilized = sterilized === undefined || sterilized === '0';
   identified = identified === undefined || identified === '0';
