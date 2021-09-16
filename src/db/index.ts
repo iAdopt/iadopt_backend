@@ -1,8 +1,7 @@
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pool, QueryResult } from 'pg';
-import config from 'config';
 
-const pool = new Pool(config.get('db'));
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL || 'postgresql://admin:iadopt_db@localhost:5432/iadopt'
+});
 
-export default (text: string, params: any[]): Promise<QueryResult<any>> => pool.query(text, params);
+export default (text: string, params: any[]): Promise<QueryResult> => pool.query(text, params);

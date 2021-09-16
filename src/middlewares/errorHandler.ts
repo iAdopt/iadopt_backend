@@ -1,20 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable operator-linebreak */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/ban-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable max-len */
-
 import { NextFunction, Request, Response } from 'express';
+import { logger } from '../utils/logger';
 
 class ApiError extends Error {
   statusCode: number;
 
-  name: string;
-
-  message: string;
-
-  constructor(status: number, message: string) {
+  constructor (status: number, message: string) {
     super();
     this.name = 'ApiError';
     this.statusCode = status;
@@ -25,19 +15,19 @@ class ApiError extends Error {
 const errorHandleMiddleware = (error: ApiError, req: Request, res: Response, next: NextFunction): any => {
   if (error.name === 'ApiError') {
     const { statusCode, message } = error;
-
     return res.status(statusCode).send({ error: message });
+  } else {
+    return res.send({ error: error.message });
   }
-  return null;
 };
 
-const catchErrors =
-  (route: Function) => async (req: Request, res: Response, next: Function, ...args: any): Promise<void> => {
-    try {
-      await route(req, res, next, ...args);
-    } catch (err) {
-      next(err);
-    }
-  };
+const catchErrors = (route: Function) => async (req: Request, res: Response, next: NextFunction, ...args: any): Promise<void> => {
+  try {
+    await route(req, res, next, ...args);
+  } catch (err) {
+    await logger('API', err);
+    next(err);
+  }
+};
 
 export { errorHandleMiddleware, ApiError, catchErrors };
