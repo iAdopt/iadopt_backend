@@ -14,6 +14,7 @@ export const getAllAnimals = dbErrorWrapper(async (): Promise<QueryResult> => {
           ORDER BY animal, images."uploadedAt" desc
       ) AS most_recent_animal_image
       ON animals.id = most_recent_animal_image.animal
+      ORDER BY animals."createdAt" DESC 
       `, []);
 });
 
@@ -26,7 +27,8 @@ export const getAnimalById = dbErrorWrapper(async (id: any): Promise<QueryResult
         date_part('month', age(birthdate)) as months
       FROM animals
       WHERE id = $1::uuid
-      `, [id]);
+      ORDER BY animals."createdAt" DESC
+    `, [id]);
 });
 
 export const getAnimalsBySpecies = dbErrorWrapper(async (species: any): Promise<QueryResult> => {
@@ -42,7 +44,8 @@ export const getAnimalsBySpecies = dbErrorWrapper(async (species: any): Promise<
       ) AS most_recent_animal_image
       ON animals.id = most_recent_animal_image.animal
       WHERE species = $1
-      `, [species]);
+      ORDER BY animals."createdAt" DESC
+    `, [species]);
 });
 
 interface filterArgs {
@@ -76,6 +79,7 @@ export const getAnimalsByFilter = dbErrorWrapper(async (args: filterArgs): Promi
       ($3::gender_enum IS NULL OR gender = $3) AND
       ($4::status_enum IS NULL OR status = $4) AND 
       ($5::int IS NULL OR location = $5)
+    ORDER BY A."createdAt" DESC
   `;
   return await query(filterQuery, [args.species, args.age, args.gender, args.status, args.location]);
 });
